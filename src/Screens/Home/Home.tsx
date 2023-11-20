@@ -1,10 +1,8 @@
 import { i18n, LocalizationKey } from "@/Localization";
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { StatusBar } from "expo-status-bar";
-import { HStack, Spinner, Heading } from "native-base";
-import { User } from "@/Services";
-import { BackButton } from "@/Components/backbutton";
+import { MainNavigator } from "@/Navigation/Main";
+import { NativeBaseProvider } from "native-base";
 // export interface IHomeProps {
 //   data: User | undefined;
 //   isLoading: boolean;
@@ -34,7 +32,11 @@ import { BackButton } from "@/Components/backbutton";
 //   );
 // };
 export const Home = () => {
-  return <BackButton/>;
+  return (
+    <NativeBaseProvider>
+      <MainNavigator></MainNavigator>
+    </NativeBaseProvider>
+  );
 }
 const styles = StyleSheet.create({
   container: {

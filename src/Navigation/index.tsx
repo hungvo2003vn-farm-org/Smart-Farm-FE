@@ -8,20 +8,44 @@ import { RootScreens } from "@/Screens";
 
 import { HomeContainer } from "@/Screens/Home";
 import { FarmDetailContainer } from "@/Screens/FarmDetail";
-import { IrrigationModeContainer } from "@/Screens/IrrigationMode";
 import { ModelContainer } from "@/Screens/Model";
 import { HistoryContainer } from "@/Screens/History";
+import { SplashScreenContainer } from "@/Screens/SplashScreen/SplashScreenContainer";
+import { LoginScreenContainer } from "@/Screens/Login";
+import MainScreenContainer from "@/Screens/Main/MainScreenContainer";
+import ProfileScreenContainer from "@/Screens/Profile/ProfileScreenContainer";
+import ProfileUpdateScreen from "@/Screens/Profile/ProfileUpdate";
+import NotifyCotainer from "@/Screens/Notify/NotifyContainer";
+import StatisticContainer from "@/Screens/Statics/StatisticContainer";
+import AddFarmScreenContainer from "@/Screens/AddFarm/AddFarmContainer";
+import RegisterScreen01 from "@/Screens/Login/Register/RegisterScreen_1";
+import RegisterScreen02 from "@/Screens/Login/Register/RegisterScreen_2";
+import RegisterScreen03 from "@/Screens/Login/Register/RegisterScreen_3";
+import RegisterScreen04 from "@/Screens/Login/Register/RegisterScreen_4";
+import { WeatherContainer } from "@/Screens/Weather";
+import { ScheduleContainer } from "@/Screens/Schedule";
 export type RootStackParamList = {
   // [RootScreens.MAIN]: undefined;
   // [RootScreens.WELCOME]: undefined;
+  [RootScreens.SPLASH]: undefined;
+  [RootScreens.LOGIN]: undefined;
   [RootScreens.HOME]: undefined;
   [RootScreens.FARMDETAIL]: undefined;
   [RootScreens.HISTORY]: undefined;
-  [RootScreens.IRRIGATIONMODE]: undefined;
+  [RootScreens.MAINTREE]: undefined;
   [RootScreens.MODEL]: undefined;
-  [RootScreens.NOTIFICATION]: undefined;
+  [RootScreens.NOTIFY]: undefined;
   [RootScreens.REPORT]: undefined;
   [RootScreens.PROFILE]: undefined;
+  [RootScreens.UPDATEPROFILE]: undefined;
+  [RootScreens.WEATHER]: undefined;
+  [RootScreens.ADDFARM]: undefined;
+  [RootScreens.REGISTER1]:undefined;
+  [RootScreens.REGISTER2]:undefined;
+  [RootScreens.REGISTER3]:undefined;
+  [RootScreens.REGISTER4]:undefined;
+  [RootScreens.STATISTIC]: undefined;
+  [RootScreens.SCHEDULE]:undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -46,12 +70,63 @@ const ApplicationNavigator = () => {
           component={HomeContainer}
         /> */}
         <RootStack.Screen
+          name={RootScreens.LOGIN}
+          component={LoginScreenContainer}
+          options={{}}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name={RootScreens.SPLASH}
+          component={SplashScreenContainer}
+          options={{}}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name={RootScreens.HOME}
+          component={HomeContainer}
+          options={{}}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name={RootScreens.REGISTER1}
+          component={RegisterScreen01}
+          options={{}}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name={RootScreens.REGISTER4}
+          component={RegisterScreen04}
+          options={{}}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name={RootScreens.REGISTER2}
+          component={RegisterScreen02}
+          options={{}}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name={RootScreens.REGISTER3}
+          component={RegisterScreen03}
+          options={{}}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name={RootScreens.ADDFARM}
+          component={AddFarmScreenContainer}
+          options={{}}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name={RootScreens.NOTIFY}
+          component={NotifyCotainer}
+          options={{}}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name={RootScreens.STATISTIC}
+          component={StatisticContainer}
+          options={{}}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name={RootScreens.UPDATEPROFILE}
+          component={ProfileUpdateScreen}
+          options={{}}
+        ></RootStack.Screen>
+        <RootStack.Screen
           name={RootScreens.FARMDETAIL}
           component={FarmDetailContainer}
-        />
-        <RootStack.Screen
-          name={RootScreens.IRRIGATIONMODE}
-          component={IrrigationModeContainer}
         />
         <RootStack.Screen
           name={RootScreens.MODEL}
@@ -61,6 +136,26 @@ const ApplicationNavigator = () => {
           name={RootScreens.HISTORY}
           component={HistoryContainer}
         />
+        <RootStack.Screen
+        name={RootScreens.WEATHER}
+        component={WeatherContainer}
+        />
+        <RootStack.Screen
+          name={RootScreens.PROFILE}
+          component={ProfileScreenContainer}
+          options={{}}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name={RootScreens.MAINTREE}
+          component={MainScreenContainer}
+          options={{}}
+        ></RootStack.Screen>
+
+        <RootStack.Screen
+          name={RootScreens.SCHEDULE}
+          component={ScheduleContainer}
+          options={{}}
+        ></RootStack.Screen>
       </RootStack.Navigator>
     </NavigationContainer>
   );

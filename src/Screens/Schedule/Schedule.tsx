@@ -1,7 +1,7 @@
 import { i18n, LocalizationKey } from "@/Localization";
-import React , {useState} from "react";
+import React, { useState }  from "react";
 import { FontAwesome5, AntDesign, Entypo, MaterialCommunityIcons, MaterialIcons, Ionicons} from "@expo/vector-icons";
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable, ScrollView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { HStack, Spinner, Heading } from "native-base";
 import { User } from "@/Services";
@@ -9,10 +9,9 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/Navigation";
 import { RootScreens } from "..";
 import {FontSize, Colors} from "@/Theme"
-import {ModelScreenNavigatorProps} from "./ModelContainer";
-
-export interface ModelProps {
-    navigation: ModelScreenNavigatorProps;
+import {ScheduleScreenNavigatorProps} from "./ScheduleContainer";
+export interface IScheduleProps {
+    navigation: ScheduleScreenNavigatorProps;
     // data: User | undefined;
     // items: Farm;
   }
@@ -44,10 +43,10 @@ export interface ModelProps {
 //     </View>
 //   );
 // };
-export const IrrigationMode= (props: {
+export const Schedule= (props: {
     onNavigate: (string: RootScreens) => void;
   }) => {
-    const [status, setStatus] = useState(1);
+const [modelstatus, setScheduleStatus] = useState(1);
   return(
     <View>
     <View style={styles.headerBar}>
@@ -79,23 +78,23 @@ export const IrrigationMode= (props: {
           </View>
         </Pressable>
         </View>
-        <View style={styles.active}>
+        <View style={styles.inactive}>
         <Pressable onPress={() => props.onNavigate(RootScreens.MODEL)} style={styles.activePress}>
           <View style={styles.cycle}>
-          <FontAwesome5 name="hand-holding-water" size={24} color="black" />
+          <Entypo name="water" size={24} color={Colors.BOLD_BUTTON} style={styles.iconStyle}/>
           </View>
           <View style={styles.intro}>
-          <Text style={styles.activeContent}>Mô hình</Text>
+          <Text style={styles.inactiveContent}>Mô hình</Text>
           </View>
           </Pressable>
         </View>
-        <View style={styles.inactive}>
+        <View style={styles.active}>
         <Pressable onPress={() => props.onNavigate(RootScreens.SCHEDULE)} style={styles.activePress}>
         <View style={styles.cycle}>
         <FontAwesome5 name="list-ul" size={24} color={Colors.BOLD_BUTTON} style={styles.iconStyle} />
         </View>
           <View style={styles.intro}>
-          <Text style={styles.inactiveContent}>Lịch trình</Text>
+          <Text style={styles.activeContent}>Lịch trình</Text>
           </View>
         </Pressable>
         </View>
@@ -110,42 +109,36 @@ export const IrrigationMode= (props: {
         </Pressable>
         </View>
       </View>
-      <View>
+      <ScrollView>
           <View style={styles.infoColumn}>
-          <Pressable onPress={()=>{
-                setStatus(1);
-            }} style={(status==1) ? styles.infoItemRenActive: styles.infoItemRenInactive}>
-            <MaterialIcons name="autorenew" size={24} color={Colors.BOLD_BUTTON} style={styles.itemIcon} />
-            <Text style= {styles.itemTitle}>Tự động 123</Text>
-            <Text style= {styles.itemBody}>Tưới tiêu tự động theo mô hình thông minh</Text>
+            <Pressable onPress={()=>{
+                setScheduleStatus(1);
+            }} style={(modelstatus==1) ? styles.infoItemRenActive: styles.infoItemRenInactive}>
+            <Text style= {styles.itemTitle}>Mô hình năng suất</Text>
+            <Text style= {styles.itemBody}>Nguồn: Nhà cung cấp</Text>
+            <Text style= {styles.itemBody}>Mô tả: Sử dụng lượng nước phù hợp để tạo ra năng suất tối ưu</Text>
             </Pressable>
           </View>
-          
-        <View style={styles.infoRow}>
           <View style={styles.infoColumn}>
           <Pressable onPress={()=>{
-                setStatus(2);
-            }} style={(status==2) ? styles.infoItemRenActive: styles.infoItemRenInactive}>
-            <MaterialCommunityIcons name="flash-auto" size={24} color={Colors.BOLD_BUTTON} style={styles.itemIcon} />
-            <Text style= {styles.itemTitle}>Bán tự động</Text>
-            <Text style= {styles.itemBody}>Nhân thông báo tưới tiêu theo mô hình thông minh</Text>
+                setScheduleStatus(2);
+            }} style={(modelstatus==2) ? styles.infoItemRenActive: styles.infoItemRenInactive}>
+            <Text style= {styles.itemTitle}>Mô hình cân bằng</Text>
+            <Text style= {styles.itemBody}>Nguồn: Nhà cung cấp</Text>
+            <Text style= {styles.itemBody}>Mô tả: Sử dụng lượng nước vừa đủ để tạo ra năng suất vừa đủ</Text>
             </Pressable>
           </View>
-          <View style={styles.irrigationButton}>
-            <Text>a</Text>
-          </View>
-          </View>
           <View style={styles.infoColumn}>
           <Pressable onPress={()=>{
-                setStatus(3);
-            }} style={(status==3) ? styles.infoItemRenActive: styles.infoItemRenInactive}>
-            <MaterialIcons name="autorenew" size={24} color={Colors.BOLD_BUTTON} style={styles.itemIcon} />
+                setScheduleStatus(3);
+            }} style={(modelstatus==3) ? styles.infoItemRenActive: styles.infoItemRenInactive}>
             <Text style= {styles.itemTitle}>Thủ công</Text>
-            <Text style= {styles.itemBody}>Linh hoạt tưới tiêu theo ý của mình</Text>
+            <Text style= {styles.itemBody}>Nguồn: Nhà cung cấp</Text>
+            <Text style= {styles.itemBody}>Mô tả: Sử dụng lượng nước tiết kiếm, vẫn đảm bảo cây phát triển</Text>
             </Pressable>
           </View>
 
-      </View> 
+      </ScrollView> 
     </View>
     </View>
   )
@@ -258,11 +251,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 40,
         marginTop: 20,
       },
-      infoRow: {
-        width: "100%",
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-      },
       infoItemRenActive: {
         flexDirection: 'column',
         alignItems: 'flex-start',
@@ -299,15 +287,5 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignItems: 'flex-start',
         marginLeft: 10,
-      },
-      irrigationButton: {
-        alignSelf: 'center',
-        width: 50,
-        height: '100%',
-        backgroundColor: Colors.NORMAL_BACKGROUND,
-        borderTopLeftRadius: 83, 
-        borderTopRightRadius: 15, 
-        borderBottomRightRadius: 15, 
-        borderBottomLeftRadius: 82,
-      },
+      }
 });
