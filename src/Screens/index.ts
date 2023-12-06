@@ -20,4 +20,5 @@ export enum RootScreens {
   LOGIN = "Login",
   MAINTREE = "MainTree",
   SCHEDULE = "Schedule",
+  NEWS = "News",
 }

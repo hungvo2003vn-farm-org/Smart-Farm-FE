@@ -24,6 +24,7 @@ import RegisterScreen03 from "@/Screens/Login/Register/RegisterScreen_3";
 import RegisterScreen04 from "@/Screens/Login/Register/RegisterScreen_4";
 import { WeatherContainer } from "@/Screens/Weather";
 import { ScheduleContainer } from "@/Screens/Schedule";
+import { NewsContainer } from "@/Screens/News";
 export type RootStackParamList = {
   // [RootScreens.MAIN]: undefined;
   // [RootScreens.WELCOME]: undefined;
@@ -46,6 +47,7 @@ export type RootStackParamList = {
   [RootScreens.REGISTER4]:undefined;
   [RootScreens.STATISTIC]: undefined;
   [RootScreens.SCHEDULE]:undefined;
+  [RootScreens.NEWS]:undefined;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -69,6 +71,11 @@ const ApplicationNavigator = () => {
           name={RootScreens.HOME}
           component={HomeContainer}
         /> */}
+        <RootStack.Screen
+          name={RootScreens.NEWS}
+          component={NewsContainer}
+          options={{}}
+        ></RootStack.Screen>
         <RootStack.Screen
           name={RootScreens.LOGIN}
           component={LoginScreenContainer}
