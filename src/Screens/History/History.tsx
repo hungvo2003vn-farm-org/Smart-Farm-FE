@@ -150,22 +150,22 @@ export const History = (props: {
             </Pressable>
           </View>
           <View style={styles.inactive}>
-            <Pressable onPress={() => props.onNavigate(RootScreens.IRRIGATIONMODE)} style={styles.activePress}>
+            <Pressable onPress={() => props.onNavigate(RootScreens.MODEL)} style={styles.activePress}>
               <View style={styles.cycle}>
                 <Entypo name="water" size={24} color={Colors.BOLD_BUTTON} style={styles.iconStyle}/>
               </View>
               <View style={styles.intro}>
-                <Text style={styles.inactiveContent}>Chế độ tưới</Text>
+                <Text style={styles.inactiveContent}>Mô hình</Text>
               </View>
             </Pressable>
           </View>
           <View style={styles.inactive}>
-            <Pressable onPress={() => props.onNavigate(RootScreens.MODEL)} style={styles.activePress}>
+            <Pressable onPress={() => props.onNavigate(RootScreens.SCHEDULE)} style={styles.activePress}>
               <View style={styles.cycle}>
                 <FontAwesome5 name="list-ul" size={24} color={Colors.BOLD_BUTTON} style={styles.iconStyle} />
               </View>
               <View style={styles.intro}>
-                <Text style={styles.inactiveContent}>Mô hình</Text>
+                <Text style={styles.inactiveContent}>Lịch trình</Text>
               </View>
             </Pressable>
           </View>

@@ -44,7 +44,7 @@ export interface ModelProps {
 //     </View>
 //   );
 // };
-export const IrrigationMode= (props: {
+export const ModelScreen= (props: {
     onNavigate: (string: RootScreens) => void;
   }) => {
     const [status, setStatus] = useState(1);

@@ -1,4 +1,4 @@
-import { Model} from "./Model";
+import { ModelScreen} from "./Model";
 import React, { useState, useEffect } from "react";
 import { useLazyGetUserQuery } from "@/Services";
 
@@ -26,5 +26,5 @@ export const ModelContainer = ({navigation}:ModelScreenNavigatorProps) => {
   // }, [fetchOne, userId]);
 
   // return <Home data={data} isLoading={isLoading} />;
-  return <Model onNavigate={onNavigate}/>;
+  return <ModelScreen onNavigate={onNavigate}/>;
 };

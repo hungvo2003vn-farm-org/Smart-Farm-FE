@@ -5,7 +5,7 @@ import styled from "styled-components/native";
 import { Container } from "../../Components/shared";
 import { colors } from "../../Components/colors";
 import bg from "../../../assets/bg/loginbg.png";
-import logo from "../../../assets//bg/logocay.png";
+import logo from "../../../assets/bg/logocay.png";
 import RegularText from "@/Components/texts/RegularText";
 import { Pressable, TextInput } from "react-native";
 import MailIcon from "../../../assets/icon/MailIcon";
