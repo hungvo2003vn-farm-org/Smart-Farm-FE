@@ -8,6 +8,7 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
 import styled from "styled-components/native";
 import { Container } from "../../Components/shared";
@@ -126,8 +127,7 @@ export const NewsScreen = (props: {
             <Text style={{color: "#0D986A", fontFamily: "Actor", fontSize: 18, fontStyle: "normal" }}> Tin mới</Text>
         </View>
         <Main>
-          <ItemContainer>
-
+          {/* <ItemContainer>
             <ButtonContainer>
               <CustomButton>
                 <ButtonText>Weather</ButtonText>
@@ -145,22 +145,29 @@ export const NewsScreen = (props: {
                 <ButtonText>Month</ButtonText>
               </CustomButton>
             </ButtonContainer>
-            {/* <ImageContainer>
-              <Image
-                source={require("../../../assets/img/News/image7.png")}
-                style={{ width: '100%', height: 200, marginBottom: 10 }}
-                resizeMode="cover"
-              />
-            </ImageContainer> */}
-            {/* {images.map((image, index) => (
-              <Image
-                key={index}
-                source={image}
-                style={{ width: '100%', height: 200, marginBottom: 10 }}
-                resizeMode="cover"
-              />
-            ))} */}
-          </ItemContainer>
+          </ItemContainer> */}
+          <ScrollView horizontal={true}>
+            <Pressable>
+              <View >
+                <Text>Tin tức</Text>
+              </View>
+            </Pressable>
+            <Pressable>
+              <View>
+                <Text>Mùa vụ</Text>
+              </View>
+            </Pressable>
+            <Pressable>
+              <View>
+                <Text>Thời tiết</Text>
+              </View>
+            </Pressable>
+            <Pressable>
+              <View>
+                <Text>Phân bón</Text>
+              </View>
+            </Pressable>
+          </ScrollView>
         </Main>
       </NewsContainer>
     </SafeAreaView>
@@ -168,7 +175,7 @@ export const NewsScreen = (props: {
 };
 
 const styles = StyleSheet.create({
-  // ... (your existing styles)
+  
 });
 
 export default NewsScreen;
