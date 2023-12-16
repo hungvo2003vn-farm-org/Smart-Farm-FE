@@ -5,7 +5,6 @@ import { ActivityIndicator, FlatList, SectionList, View, Text, StyleSheet, Image
 import { StatusBar } from "expo-status-bar";
 import { HStack, Spinner, Heading } from "native-base";
 import { User } from "@/Services";
-import { BackButton } from "@/Components/backbutton";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/Navigation";
 import { RootScreens } from "..";
