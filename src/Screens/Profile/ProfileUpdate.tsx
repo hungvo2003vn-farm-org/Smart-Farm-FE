@@ -38,7 +38,6 @@ const UserImageContainer = styled.Image`
   width: 30%;
   height: 15%;
   resize-mode: contain;
-  border-radius: 50%;
   margin-top: 30px;
   margin-bottom: 21px;
 `;

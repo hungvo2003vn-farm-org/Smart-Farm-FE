@@ -122,7 +122,7 @@ const userApi = API.injectEndpoints({
 const weatherApi = API.injectEndpoints({
   endpoints: (build) => ({
     getWeather: build.query<Root, string>({
-      query: (location) => `${location}&days=7`,
+      query: (location) => `${location}`,
     }),
   }),
   overrideExisting: true,

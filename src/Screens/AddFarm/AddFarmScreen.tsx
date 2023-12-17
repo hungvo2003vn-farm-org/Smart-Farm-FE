@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { Container } from "@/Components/shared";
 import styled from "styled-components/native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -9,6 +9,9 @@ import { SafeAreaView, TextInput } from "react-native";
 import BigText from "@/Components/texts/BigText";
 import { colors } from "@/Components/colors";
 import RegularButton from "@/Components/button/RegularButton";
+import { addItem } from "@/Store/reducers";
+import { useDispatch } from "react-redux";
+import { TreeItemProps } from "@/Components/item/TreeItem";
 
 const SubContainer = styled.View`
   height: 54px;
@@ -22,8 +25,22 @@ const SubContainer = styled.View`
   margin-vertical: 17px;
 `;
 const AddFarmScreen: FunctionComponent = () => {
-  const navigation =
+    const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const dispatch = useDispatch();
+    const [newItem, setNewItem] = useState<TreeItemProps>({
+      treeName: '',
+      temp: '',
+      moisture: '',
+    });
+    const handleAddItem = () => {
+      dispatch(addItem(newItem));
+      setNewItem({
+        treeName:'',
+        temp: '',
+        moisture: '',
+      });
+    };
   return (
     <SafeAreaView style={{ backgroundColor: "#F9F9F9", flex: 1 }}>
       <SubContainer style={{backgroundColor:"#F9F9F9"}}>
@@ -44,6 +61,10 @@ const AddFarmScreen: FunctionComponent = () => {
           <TextInput
             placeholder="Ten nong trai"
             style={{ flexGrow: 1 , padding:10}}
+            value={newItem.treeName}
+            onChangeText={(text) =>
+              setNewItem({ ...newItem, treeName: text })
+            }
           ></TextInput>
         </SubContainer>
         <SubContainer>
@@ -56,6 +77,10 @@ const AddFarmScreen: FunctionComponent = () => {
           <TextInput
             placeholder="Loai cay"
             style={{ flexGrow: 1 , padding:10}}
+            value={newItem.temp}
+            onChangeText={(text) =>
+              setNewItem({ ...newItem, temp: text })
+            }
           ></TextInput>
           <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
         </SubContainer>
@@ -63,17 +88,22 @@ const AddFarmScreen: FunctionComponent = () => {
           <TextInput
             placeholder="Loai dat"
             style={{ flexGrow: 1 , padding:10}}
+            value={newItem.moisture}
+            onChangeText={(text) =>
+              setNewItem({ ...newItem, moisture: text })
+            }
           ></TextInput>
           <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
         </SubContainer>
         <RegularButton
             onPress={() => {
+              handleAddItem
               navigation.goBack();
             }}
             btnStyles={{ marginVertical: 40, width: 130 , alignSelf:'center'}}
             textStyles={{ color: `${colors.white}`, fontSize: 20 }}
           >
-            Save
+            Lưu
         </RegularButton>
     </SafeAreaView>
   );

@@ -31,22 +31,30 @@ const ImageContainer = styled.Image`
 import { TreeItemProps } from "./types";
 import BigText from "../texts/BigText";
 import { FontSize } from "@/Theme/Variables";
+import { Pressable } from "react-native";
+import { RootScreens } from "@/Screens";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "@/Navigation";
 const TreeItem: FunctionComponent<TreeItemProps> = (props) => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   return (
-    <ItemContainer>
-      <ImageContainer source={plant1}></ImageContainer>
-      <DetailContainer>
-        <BigText textStyles={{ fontSize: 20, marginBottom: 10 }}>
-          {props.treeName}
-        </BigText>
-        <RegularText textStyles={{ fontWeight: "200" }}>
-          {"Temperature :" + props.temp + "oC"}
-        </RegularText>
-        <RegularText textStyles={{ fontWeight: "200" }}>
-          {"Moisture : " + props.moisture + "%"}
-        </RegularText>
-      </DetailContainer>
-    </ItemContainer>
+    <Pressable onPress={() => navigation.navigate(RootScreens.FARMDETAIL)}>
+      <ItemContainer>
+        <ImageContainer source={plant1}></ImageContainer>
+        <DetailContainer>
+          <BigText textStyles={{ fontSize: 20, marginBottom: 10 }}>
+            {props.treeName}
+          </BigText>
+          <RegularText textStyles={{ fontWeight: "200" }}>
+            {"Temperature :" + props.temp + "oC"}
+          </RegularText>
+          <RegularText textStyles={{ fontWeight: "200" }}>
+            {"Moisture : " + props.moisture + "%"}
+          </RegularText>
+        </DetailContainer>
+      </ItemContainer>
+    </Pressable>
   );
 };
 export default TreeItem;

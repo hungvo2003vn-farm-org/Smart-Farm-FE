@@ -92,7 +92,7 @@ const ProfileScreen: FunctionComponent = () => {
             name="pencil"
             size={28}
             color="white"
-            style={{ alignSelf: "center", marginLeft: 170 }}
+            style={{ alignSelf: "center", marginLeft: 160 }}
             onPress={() => {
               navigation.navigate(RootScreens.UPDATEPROFILE);
             }}
@@ -100,8 +100,8 @@ const ProfileScreen: FunctionComponent = () => {
         </Header>
         <SubContainer
           style={{
-            // borderTopLeftRadius: 10,
-            // borderTopRightRadius: 10,
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
           }}
         >
           <Wrapper style={{ marginLeft: 10 }}>
@@ -131,8 +131,8 @@ const ProfileScreen: FunctionComponent = () => {
         </SubContainer>
         <SubContainer
           style={{
-            // borderBottomLeftRadius: 10,
-            // borderBottomRightRadius: 10,
+            borderBottomLeftRadius: 10,
+            borderBottomRightRadius: 10,
           }}
         >
           <Wrapper style={{ marginLeft: 10 }}>
@@ -171,8 +171,8 @@ const ProfileScreen: FunctionComponent = () => {
 
         <SubContainer
           style={{
-            // borderTopLeftRadius: 10,
-            // borderTopRightRadius: 10,
+            borderTopLeftRadius: 10,
+            borderTopRightRadius: 10,
           }}
         >
           <Wrapper style={{ marginLeft: 10 }}>
@@ -194,8 +194,8 @@ const ProfileScreen: FunctionComponent = () => {
         </SubContainer>
         <SubContainer
           style={{
-            // borderBottomLeftRadius: 10,
-            // borderBottomRightRadius: 10,
+            borderBottomLeftRadius: 10,
+            borderBottomRightRadius: 10,
           }}
         >
           <Wrapper style={{ marginLeft: 10 }}>

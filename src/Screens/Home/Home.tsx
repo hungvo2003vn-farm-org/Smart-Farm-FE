@@ -35,6 +35,7 @@ export const Home = () => {
   return (
     <NativeBaseProvider>
       <MainNavigator></MainNavigator>
+      
     </NativeBaseProvider>
   );
 }

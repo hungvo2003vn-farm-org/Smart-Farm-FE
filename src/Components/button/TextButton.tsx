@@ -11,6 +11,7 @@ const ButtonView = styled.TouchableOpacity`
   background-color: ${colors.tranparent};
   width: 100%;
   border-radius: 20px;
+  padding: 4px;
 `;
 
 const TextButton: FunctionComponent<ButtonProps> = (props) => {

@@ -52,8 +52,7 @@ const ItemContainer = styled.ScrollView`
   overflow-y: scroll;
 `;
 const MainScreen: FunctionComponent = () => {
-  const navigation =
-  useNavigation<NativeStackNavigationProp<RootStackParamList>>();;
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   return (
     <SafeAreaView
       style={{

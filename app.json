@@ -32,12 +32,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [],
-    "extra": {
-
-    },
     "runtimeVersion": {
       "policy": "sdkVersion"
+    },
+    "plugins": [],
+    "extra": {
     }
   }
 }

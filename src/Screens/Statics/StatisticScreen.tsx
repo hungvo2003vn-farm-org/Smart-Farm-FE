@@ -9,6 +9,8 @@ import { SafeAreaView } from "react-native";
 import BigText from "@/Components/texts/BigText";
 import logo from "../../../assets//bg/logocay.png";
 import staticImage from "../../../assets//bg/static.png";
+import RegularButton from "@/Components/button/RegularButton";
+import TextButton from "@/Components/button/TextButton";
 const StatisticContainer = styled(Container)`
   justify-content: flex-start;
   align-items: center;
@@ -39,13 +41,8 @@ const SubContainer = styled.View`
 `;
 const Wrapper = styled.View`
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
-`;
-const StatisticImage = styled.Image`
-  width: 80%;
-  height: 200px;
-  resize-mode: cover;
 `;
 const Divider = styled.View`
   width: 100%;
@@ -65,7 +62,7 @@ const StatisticScreen: FunctionComponent = () => {
           ></LogoContainer>
           <BigText
             textStyles={{
-              fontSize: 20,
+              fontSize: 25,
               marginStart: 5,
               fontWeight: "300",
               color: "#0D986A",
@@ -75,12 +72,68 @@ const StatisticScreen: FunctionComponent = () => {
           </BigText>
         </Header>
         <SubContainer>
+        <BigText
+          textStyles={{
+            fontSize: 20,
+            width: "100%",
+            textAlign: "left",
+            color: "#181D27",
+          }}
+        >
+          Tin mới
+        </BigText>
+        </SubContainer>
+        <SubContainer>
           <Wrapper>
-            <RegularText textStyles={{ fontSize: 30 }}>Nhiệt độ</RegularText>
-            <RegularText textStyles={{ fontSize: 30 }}>C</RegularText>
+          <TextButton
+              onPress={() => {
+              }}
+              btnStyles={{
+                alignSelf: "flex-end",
+                backgroundColor: `${colors.primary}`,
+                width: "20%",
+              }}
+              textStyles={{ fontSize: 13 , fontWeight: "400",color: `${colors.white}` }}
+            >
+             Tin tức
+            </TextButton>
+            <TextButton
+              onPress={() => {
+              }}
+              btnStyles={{
+                alignSelf: "flex-end",
+                backgroundColor: `${colors.tranparent}`,
+                width: "20%",
+              }}
+              textStyles={{ fontSize: 13 , fontWeight: "400",color: `${colors.black}` }}
+            >
+             Mùa vụ
+            </TextButton>
+            <TextButton
+              onPress={() => {
+              }}
+              btnStyles={{
+                alignSelf: "flex-end",
+                backgroundColor: `${colors.tranparent}`,
+                width: "20%",
+              }}
+              textStyles={{ fontSize: 13 , fontWeight: "400",color: `${colors.black}` }}
+            >
+             Thời tiết
+            </TextButton>
+            <TextButton
+              onPress={() => {
+              }}
+              btnStyles={{
+                alignSelf: "flex-end",
+                backgroundColor: `${colors.tranparent}`,
+                width: "23%",
+              }}
+              textStyles={{ fontSize: 13 , fontWeight: "400",color: `${colors.black}` }}
+            >
+             Phân bón
+            </TextButton>
           </Wrapper>
-          <Divider />
-          <StatisticImage source={staticImage}></StatisticImage>
         </SubContainer>
       </StatisticContainer>
     </SafeAreaView>
