@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from "react";
-import { StatusBar } from "expo-status-bar";
 import styled from "styled-components/native";
 
 import { Container } from "../../Components/shared";
@@ -31,7 +30,7 @@ const LogoContainer = styled.Image`
 `;
 const Subcontainer = styled.ScrollView`
   width: 100%;
-  height: fit;
+  
 `
 const NotfifyScreen: FunctionComponent = () => {
   return (
@@ -59,49 +58,29 @@ const NotfifyScreen: FunctionComponent = () => {
           </RegularText>
           <View style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
             <NotifyItem
-              title={"Vuon Xoai"}
-              detail={"Complete in 10 minutes"}
-              time={"At 8:10 Morning"}
+              title={"Vườn Xoài"}
+              detail={"Đã tưới xong"}
+              time={"Lúc 8:10 Sáng"}
             ></NotifyItem>
             <NotifyItem
-              title={"Vuon Xoai"}
-              detail={"Start Operation in about 5 minutes"}
-              time={"At 8:10 Morning"}
-            ></NotifyItem>
-            <NotifyItem
-              title={"Vuon Xoai"}
-              detail={"Preparing to start the task. Estimate about 10 minutes."}
-              time={"At 8:10 Morning"}
-            ></NotifyItem>
-            <NotifyItem
-              title={"Vuon Xoai"}
-              detail={"Complete"}
-              time={"At 8:10 Morning"}
+              title={"Vườn Xoài"}
+              detail={"Chuẩn bị tưới trong 5 phút nữa"}
+              time={"Lúc 7:55 Sáng"}
             ></NotifyItem>
           </View>
-          <RegularText textStyles={{marginLeft: 10, marginVertical:10,color: '#64748b'}}>
+          <RegularText textStyles={{marginLeft: 10, marginVertical:10, color: '#64748b'}}>
             Yesterday
           </RegularText>
           <View style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
           <NotifyItem
-              title={"Vuon Xoai"}
-              detail={"Complete"}
-              time={"At 8:10 Morning"}
+              title={"Vườn Xoài"}
+              detail={"Đã tưới xong"}
+              time={"Lúc 8:10 Sáng"}
             ></NotifyItem>
             <NotifyItem
-              title={"Vuon Xoai"}
-              detail={"Complete"}
-              time={"At 8:10 Morning"}
-            ></NotifyItem>
-            <NotifyItem
-              title={"Vuon Xoai"}
-              detail={"Complete"}
-              time={"At 8:10 Morning"}
-            ></NotifyItem>
-            <NotifyItem
-              title={"Vuon Xoai"}
-              detail={"Complete"}
-              time={"At 8:10 Morning"}
+              title={"Vườn Xoài"}
+              detail={"Chuẩn bị tưới trong 5 phút nữa"}
+              time={"Lúc 7:55 Sáng"}
             ></NotifyItem>
           </View>
         </Subcontainer>

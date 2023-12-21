@@ -4,6 +4,6 @@ import { StyleProp, TextStyle } from "react-native";
 export interface TreeItemProps {
   textStyles?: StyleProp<TextStyle>;
   treeName: String;
-  temp: String;
-  moisture: String;
+  model: String;
+  timeOn: String;
 }

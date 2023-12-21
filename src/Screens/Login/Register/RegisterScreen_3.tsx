@@ -25,7 +25,7 @@ const BackgroundImage = styled.ImageBackground`
   justify-content: center;
   width: 100%;
   resize-mode: contain;
-  flex-direction: col;
+  flex-direction: column;
   flex: 1;
 `;
 const LogoContainer = styled.Image`
@@ -53,13 +53,6 @@ const InputDivContainer = styled.View`
   width: 90%;
   margin-vertical: 4px;
 `;
-const Circle = styled.View`
-  border-radius: 50%;
-  width: 16px;
-  aspect-ratio: 1;
-  background-color: ${colors.tranparent};
-  border: 2px solid #416D50
-`;
 const RegisterScreen03: FunctionComponent = () => {
   const navigaiton =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -73,6 +66,10 @@ const RegisterScreen03: FunctionComponent = () => {
               Bắt đầu với SMART
             </BigText>
           </View>
+          <InputDivContainer>
+            <AntDesign name="mail" size={24} color="black"  style={{marginHorizontal:10}}/>
+            <TextInput placeholder="Email"></TextInput>
+          </InputDivContainer>
           <InputDivContainer>
             <AntDesign name="user" size={24} color="black"  style={{marginHorizontal:10}}/>
             <TextInput placeholder="Tên đăng nhập"></TextInput>
@@ -109,13 +106,6 @@ const RegisterScreen03: FunctionComponent = () => {
                     Đã có tài khoản? Đăng nhập
                 </RegularText>
             </Pressable>
-          </View>
-          <View style={{width:100, marginTop:35, display:'flex', flexDirection:'row', justifyContent:'space-around'}}>
-            <Circle></Circle>
-            <Circle></Circle>
-            <Circle style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                <Circle style={{margin:'auto', width:7, backgroundColor:'#416D50' }}></Circle>
-            </Circle>
           </View>
         </SubContainer>
       </BackgroundImage>

@@ -5,7 +5,7 @@ import { colors } from "../colors";
 import { Container } from "../shared";
 import { Ionicons } from "@expo/vector-icons";
 import RegularText from "../texts/RegularText";
-import plant1 from "../../../assets/bg/plant1.png";
+import plant1 from "../../../assets/tree.png";
 
 const ItemContainer = styled.View`
   flex-direction: row;
@@ -17,16 +17,16 @@ const ItemContainer = styled.View`
   margin-vertical: 9px;
 `;
 const DetailContainer = styled.View`
-  flex-direction: col;
+  flex-direction: column;
   justify-content: center;
   height: 100%;
   margin-left: 10px;
 `;
 const ImageContainer = styled.Image`
-  width: 150px;
-  height: 200px;
+  width: 100px;
+  height: 150px;
   resize-mode: contain;
-  margin-left: -30px;
+  margin-left: 10px;
 `;
 import { TreeItemProps } from "./types";
 import BigText from "../texts/BigText";
@@ -39,7 +39,7 @@ import { RootStackParamList } from "@/Navigation";
 const TreeItem: FunctionComponent<TreeItemProps> = (props) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   return (
-    <Pressable onPress={() => navigation.navigate(RootScreens.FARMDETAIL)}>
+    <Pressable onPress={() => navigation.navigate(RootScreens.MODEL)}>
       <ItemContainer>
         <ImageContainer source={plant1}></ImageContainer>
         <DetailContainer>
@@ -47,10 +47,10 @@ const TreeItem: FunctionComponent<TreeItemProps> = (props) => {
             {props.treeName}
           </BigText>
           <RegularText textStyles={{ fontWeight: "200" }}>
-            {"Temperature :" + props.temp + "oC"}
+            {"Mô hình : " + props.model}
           </RegularText>
           <RegularText textStyles={{ fontWeight: "200" }}>
-            {"Moisture : " + props.moisture + "%"}
+            {"Thời điểm tưới tiếp theo : " + props.timeOn}
           </RegularText>
         </DetailContainer>
       </ItemContainer>

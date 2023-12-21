@@ -26,7 +26,7 @@ const BackgroundImage = styled.ImageBackground`
   align-items: center;
   width: 100%;
   resize-mode: contain;
-  flex-direction: col;
+  flex-direction: column;
   resize-mode: contain;
   flex: 1;
 `;
@@ -36,7 +36,7 @@ const BigContainer = styled.View`
   background-color: ${colors.white};
   align-self: flex-end;
   flex: 1;
-  flex-direction: col;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   border-radius: 23px 23px 0px 0px;
@@ -106,10 +106,10 @@ const LoginScreen: FunctionComponent = () => {
               </RegularButton>
             </View>
             <View style={{ display: "flex", flexDirection: "row", alignSelf:'center', margin:20 }}>
-              <Pressable style={{ marginHorizontal: 5 }} onPress={()=>{navigation.navigate(RootScreens.REGISTER1)}}>
+              {/* <Pressable style={{ marginHorizontal: 5 }} onPress={()=>{navigation.navigate(RootScreens.REGISTER1)}}>
                 <RegularText textStyles={{color:colors.primary}}>Đăng nhập bằng điện thoại</RegularText>
-              </Pressable>
-              <RegularText textStyles={{color:colors.primary}}>|</RegularText>
+              </Pressable> */}
+              {/* <RegularText textStyles={{color:colors.primary}}>|</RegularText> */}
               <Pressable style={{ marginHorizontal: 5 }} onPress={()=>{navigation.navigate(RootScreens.REGISTER3)}}>
                 <RegularText textStyles={{color:colors.primary}}>Đăng kí</RegularText>
               </Pressable>

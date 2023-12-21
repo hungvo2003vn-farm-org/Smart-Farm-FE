@@ -14,7 +14,7 @@ import TextButton from "@/Components/button/TextButton";
 const StatisticContainer = styled(Container)`
   justify-content: flex-start;
   align-items: center;
-  flex-direction: col;
+  flex-direction: column;
   width: 100%;
   flex: 1;
   background-color: ${colors.white};
@@ -35,7 +35,7 @@ const SubContainer = styled.View`
   width: 90%;
   margin: 10px;
   background-color: white;
-  flex-direction: col;
+  flex-direction: column;
   align-items: center;
   margin-horizontal: 13px;
 `;

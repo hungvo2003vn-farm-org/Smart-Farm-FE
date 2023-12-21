@@ -1,7 +1,7 @@
 import { i18n, LocalizationKey } from "@/Localization";
 import React, { useState } from "react";
 import { FontAwesome5, AntDesign, Entypo, MaterialCommunityIcons, MaterialIcons, Ionicons, Feather } from "@expo/vector-icons";
-import { View, Text, StyleSheet, Image, Pressable, ScrollView, TouchableOpacity, Modal, TextInput } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable, ScrollView, TouchableOpacity, Modal, TextInput, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { HStack, Spinner, Heading } from "native-base";
@@ -12,6 +12,8 @@ import { RootScreens } from "..";
 import { FontSize, Colors } from "@/Theme"
 import { ScheduleScreenNavigatorProps } from "./ScheduleContainer";
 import HeaderDetail from "@/Components/header";
+const screenWidth = Dimensions.get('window').width;
+const screenScale = screenWidth / 375;
 export interface IScheduleProps {
   navigation: ScheduleScreenNavigatorProps;
   // data: User | undefined;
@@ -53,7 +55,9 @@ export const Schedule = (props: {
   const [isConfirmationVisible, setConfirmationVisible] = useState(false); //Confirm delete UI
   const [isCreateScheduleVisible, setCreateScheduleVisible] = useState(false); //Confirm create schedule UI
   const [inputDate, setInputDate] = useState(''); // Select date in create schedule
-
+  const [timeOn, setTimeOn] = useState(''); 
+  const [duration, setDuration] = useState(''); 
+  const [amount, setAmount] = useState(''); 
 
   //Handle create schedule
   const handleCreateSchedulePress = () => {
@@ -84,20 +88,29 @@ export const Schedule = (props: {
     setConfirmationVisible(false);
   };
   //Handle choose date
-  const handleInputChange = (text: string) => {
+  const handleDateChange = (text: string) => {
     setInputDate(text);
+  };
+  const handleTimeOnChange = (text: string) => {
+    setTimeOn(text);
+  };
+  const handleDurationChange = (text: string) => {
+    setDuration(text);
+  };
+  const handleAmountChange = (text: string) => {
+    setAmount(text);
   };
   const scenario = [
     {
       sche: [
         {
           waterHour: '07:00',
-          waterTime: '10',
+          waterTime: '10:00',
           water: '500',
         },
         {
           waterHour: '08:00',
-          waterTime: '12',
+          waterTime: '12:00',
           water: '700',
         }
       ]
@@ -176,22 +189,22 @@ export const Schedule = (props: {
               justifyContent: 'space-between',
             }}>
               <Text style={styles.titleView}>Kịch bản tưới</Text>
-              <TouchableOpacity onPress={() => { }}>
+              {/* <TouchableOpacity onPress={() => { }}>
                 <AntDesign name="down" size={24} color="black" />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
             <View style={{ backgroundColor: '#E9F3ED' }}>
-              <Text style={{ margin: 10, fontSize: 17 }}>Mô hình: Mô hình năng suất</Text>
+              <Text style={{ margin: 10, fontSize: 17 }}>Mô hình: Năng suất</Text>
               <View style={styles.dataItemScenario}>
                 <View style={styles.container}>
                   <View style={styles.leftColumn}>
-                    <Text>Thời gian</Text>
+                    <Text>Thời gian (giờ)</Text>
                   </View>
                   <View style={styles.midColumn}>
-                    <Text>Thời lượng</Text>
+                    <Text>Thời lượng (phút)</Text>
                   </View>
                   <View style={styles.rightColumn}>
-                    <Text >Lượng nước</Text>
+                    <Text >Lượng nước (lít)</Text>
                   </View>
                 </View>
                 {/* <Text>
@@ -259,9 +272,12 @@ export const Schedule = (props: {
                   justifyContent: 'space-between',
                 }}>
                   <Text style={styles.titleView} >Lịch trình của tôi</Text>
-                  <TouchableOpacity onPress={() => { }}>
+                  {/* <TouchableOpacity onPress={() => { }}>
                     <AntDesign name="down" size={24} color="black" />
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
+                </View>
+                <View style={{paddingLeft: '2%', paddingTop: '2%'}}>
+                        <Text style={styles.regularText}>{item.date}</Text>
                 </View>
                 {
                   <View>
@@ -320,43 +336,43 @@ export const Schedule = (props: {
             <View style={styles.createScheduleUI}>
               <Text style={styles.confirmTitle}>Thêm lịch tưới</Text>
               <View>
-                <Text style={styles.scheduleText}>Ngày:</Text>
+                <Text style={styles.scheduleText}>Ngày tưới:</Text>
                 <View style={styles.borderBoxField}>
                   <TextInput
                     style={styles.scheduleTextInput}
                     placeholder="18/10/2023"
-                    onChangeText={handleInputChange}
+                    onChangeText={handleDateChange}
                     value={inputDate}
-                    keyboardType="numeric"
+                    keyboardType="numbers-and-punctuation"
                   />
                 </View>
-                <Text style={styles.scheduleText}>Ngày:</Text>
+                <Text style={styles.scheduleText}>Thời điểm tới (giờ:phút):</Text>
                 <View style={styles.borderBoxField}>
                   <TextInput
                     style={styles.scheduleTextInput}
-                    placeholder="00:00:00"
-                    onChangeText={handleInputChange}
-                    value={inputDate}
-                    keyboardType="numeric"
+                    placeholder="00:00"
+                    onChangeText={handleTimeOnChange}
+                    value={timeOn}
+                    keyboardType="numbers-and-punctuation"
                   />
                 </View>
-                <Text style={styles.scheduleText}>Ngày:</Text>
+                <Text style={styles.scheduleText}>Thời lượng tới (phút:giây):</Text>
                 <View style={styles.borderBoxField}>
                   <TextInput
                     style={styles.scheduleTextInput}
-                    placeholder="00:00:00"
-                    onChangeText={handleInputChange}
-                    value={inputDate}
-                    keyboardType="numeric"
+                    placeholder="00:00"
+                    onChangeText={handleDurationChange}
+                    value={duration}
+                    keyboardType="numbers-and-punctuation"
                   />
                 </View>
-                <Text style={styles.scheduleText}>Ngày:</Text>
+                <Text style={styles.scheduleText}>Lượng nước (lít):</Text>
                 <View style={styles.borderBoxField}>
                   <TextInput
                     style={styles.scheduleTextInput}
                     placeholder="00"
-                    onChangeText={handleInputChange}
-                    value={inputDate}
+                    onChangeText={handleAmountChange}
+                    value={amount}
                     keyboardType="numeric"
                   />
                 </View>
@@ -666,4 +682,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  regularText: {
+    color: Colors.BOLD_BUTTON, 
+    fontSize: 17 * screenScale, 
+    fontWeight: '500',
+  },
+
 });

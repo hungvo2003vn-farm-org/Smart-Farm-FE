@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View } from "react-native";
 import RegularText from "@/Components/texts/RegularText";
 const NotifyContainerItem = styled.View`
-    flex-direction: col;
+    flex-direction: column;
     background-color: ${colors.lightgray};
     border-radius: 10px;
     margin-vertical: 2px;

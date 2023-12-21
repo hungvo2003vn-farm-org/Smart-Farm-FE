@@ -35,7 +35,6 @@ const UserImageContainer = styled.Image`
   height: 72%;
   resize-mode: contain;
   margin: 15px 18px;
-  border: 3px solid #fff;
   border-radius: 50px;
 `;
 const Wrapper = styled.View``;
@@ -53,7 +52,7 @@ const Circle = styled.View`
   width: 45px;
   height: 45px;
   z-index: 1;
-  border-radius: 50%;
+  border-radius: 22.5px;
   justify-content: center;
   align-items: center;
 `;

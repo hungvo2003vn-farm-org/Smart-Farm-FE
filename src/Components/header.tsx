@@ -28,7 +28,7 @@ const HeaderDetail = () => {
             <Text style={styles.normalText}>Địa chỉ: Đồng Nai</Text>
           </View>
           <View>
-            <Text style={styles.normalText}>Đất: Đất thịt</Text>
+            <Text style={styles.normalText}>Loại cây: Xoài</Text>
             <Text style={styles.normalText}>Diện tích: 2000 m2</Text>
           </View>
         </View>

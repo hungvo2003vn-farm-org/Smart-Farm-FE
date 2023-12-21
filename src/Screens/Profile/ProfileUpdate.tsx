@@ -21,7 +21,7 @@ const ProfileUpdateScreenContainer = styled(Container)`
   width: 100%;
   flex: 1;
   background-color: "#F9F9F9";
-  flex-direction: col;
+  flex-direction: column;
 `;
 const SubContainer = styled.View`
   height: 54px;
@@ -73,38 +73,22 @@ const ProfileUpdateScreen: FunctionComponent = () => {
           Trần Văn A
         </RegularText>
         <SubContainer>
-          <TextInput placeholder="Họ" style={{ flexGrow: 1 }}></TextInput>
-        </SubContainer>
-        <SubContainer>
-          <TextInput placeholder="Tên" style={{ flexGrow: 1 }}></TextInput>
+          <TextInput placeholder="Họ Tên" style={{ flexGrow: 1 }}></TextInput>
         </SubContainer>
         <SubContainer>
           <Feather
-            name="phone"
+            name="mail"
             size={24}
             color="gray"
             style={{ marginLeft: 2 }}
           />
           <Divider></Divider>
           <TextInput
-            placeholder="Số điện thoại"
+            placeholder="Email"
             style={{ flexGrow: 1 }}
           ></TextInput>
         </SubContainer>
-        <SubContainer>
-          <TextInput
-            placeholder="Giới tính"
-            style={{ flexGrow: 1 }}
-          ></TextInput>
-          <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
-        </SubContainer>
-        <SubContainer>
-          <TextInput
-            placeholder="Ngày sinh"
-            style={{ flexGrow: 1 }}
-          ></TextInput>
-          <AntDesign name="calendar" size={24} color="black" />
-        </SubContainer>
+       
         <Wrapper>
           <RegularButton
             onPress={() => {

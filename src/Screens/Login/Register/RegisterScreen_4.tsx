@@ -8,14 +8,12 @@ import bg from "../../../../assets/bg/loginbg.png";
 import logo from "../../../../assets//bg/logocay.png";
 import RegularText from "@/Components/texts/RegularText";
 import BigText from "@/Components/texts/BigText";
-import { Pressable, TextInput, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { View } from "react-native";
 import RegularButton from "@/Components/button/RegularButton";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "@/Navigation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootScreens } from "@/Screens";
-import { AntDesign } from '@expo/vector-icons';
 const RegisterLoginContainer = styled.View`
   width: 100%;
   height: 100%;
@@ -25,7 +23,7 @@ const BackgroundImage = styled.ImageBackground`
   justify-content: center;
   width: 100%;
   resize-mode: contain;
-  flex-direction: col;
+  flex-direction: column;
   flex: 1;
 `;
 const LogoContainer = styled.Image`
@@ -53,13 +51,7 @@ const InputDivContainer = styled.View`
   width: 90%;
   margin-vertical: 4px;
 `;
-const Circle = styled.View`
-  border-radius: 50%;
-  width: 16px;
-  aspect-ratio: 1;
-  background-color: ${colors.tranparent};
-  border: 2px solid #416D50
-`;
+
 const RegisterScreen04: FunctionComponent = () => {
   const navigaiton =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();

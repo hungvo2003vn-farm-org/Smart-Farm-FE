@@ -48,7 +48,7 @@ const ItemContainer = styled.ScrollView`
   width: 100%;
   margin-top: 2px;
   display: flex;
-  flex-direction: col;
+  flex-direction: column;
   overflow-y: scroll;
 `;
 const MainScreen: FunctionComponent = () => {
@@ -94,35 +94,10 @@ const MainScreen: FunctionComponent = () => {
             </RegularText>
         </Pressable>
         <ItemContainer>
-          <TreeItem
+          <TreeItem 
             treeName={"Cây xoài"}
-            temp={"30"}
-            moisture={"67"}
-          ></TreeItem>
-          <TreeItem
-            treeName={"Cây cam"}
-            temp={"30"}
-            moisture={"67"}
-          ></TreeItem>
-          <TreeItem
-            treeName={"Cây cam"}
-            temp={"30"}
-            moisture={"67"}
-          ></TreeItem>
-          <TreeItem
-            treeName={"Cây cam"}
-            temp={"30"}
-            moisture={"67"}
-          ></TreeItem>
-          <TreeItem
-            treeName={"Cây cam"}
-            temp={"30"}
-            moisture={"67"}
-          ></TreeItem>
-          <TreeItem
-            treeName={"Cây cam"}
-            temp={"30"}
-            moisture={"67"}
+            model={"Năng suất"}
+            timeOn={"10:00:00"}
           ></TreeItem>
         </ItemContainer>
       </MainScreenContainer>

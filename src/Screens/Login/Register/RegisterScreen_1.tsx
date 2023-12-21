@@ -24,7 +24,7 @@ const BackgroundImage = styled.ImageBackground`
   justify-content: center;
   width: 100%;
   resize-mode: contain;
-  flex-direction: col;
+  flex-direction: column;
   flex: 1;
 `;
 const LogoContainer = styled.Image`

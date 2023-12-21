@@ -1,7 +1,7 @@
 import { i18n, LocalizationKey } from "@/Localization";
 import React , {useState} from "react";
 import { FontAwesome5, AntDesign, Entypo, MaterialCommunityIcons, MaterialIcons, Ionicons} from "@expo/vector-icons";
-import { View, Text, StyleSheet, Image, Pressable, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable, Dimensions, ScrollView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { RootScreens } from "..";
 import {FontSize, Colors} from "@/Theme"
@@ -19,6 +19,27 @@ export interface ModelProps {
 export const Model= (props: {
     onNavigate: (string: RootScreens) => void;
   }) => {
+    const data = [
+      {
+        name: 'Nắng suất',
+        source: 'Nhà cung cấp',
+        des: 'Sử dụng lượng nước phù hợp để tạo ra năng suất tối ưu',
+        active: true,
+      },
+      {
+        model: 'Cân bằng',
+        source: 'Nhà cung cấp',
+        des: ' Sử dụng lượng nước vừa đủ để tạo ra năng suất vừa đủ',
+        active: false,
+      },
+      {
+        model: 'Tiết kiệm',
+        source: 'Nhà cung cấp',
+        des: 'Sử dụng lượng nước tiết kiệm, vẫn đảm bảo cây phát triển',
+        active: false,
+      }
+    ];
+    
   return(
     <SafeAreaView style={{backgroundColor: Colors.AVT_BACKGROUND,}}>
       <StatusBar style="auto" />
@@ -67,7 +88,43 @@ export const Model= (props: {
           </View>
         </View>
         <View style={styles.info}>
-            
+          <ScrollView style={styles.scrollView}>
+          {data.map((item, index) => {
+            return (
+              <View key={index} style={{ flexDirection: 'row' }}>
+                {
+                item.active? 
+                  (
+                    <View style={styles.dataItemActive}>
+                      <Text >
+                        Mô hình {item.name}
+                      </Text>
+                      <Text>
+                        Nguồn: {item.source}
+                      </Text>
+                      <Text>
+                        Mô tả: {item.des}
+                      </Text>
+                    </View>
+                  ):(
+                    <View style={styles.dataItemInactive}>
+                    <Text >
+                      Mô hình {item.name}
+                    </Text>
+                    <Text>
+                      Nguồn: {item.source}
+                    </Text>
+                    <Text>
+                      Mô tả: {item.des}
+                    </Text>
+                  </View>
+                  )
+                
+                }
+              </View>
+              );
+              })}
+          </ScrollView>
         </View>
       </View>
     </SafeAreaView>
@@ -296,7 +353,6 @@ const styles = StyleSheet.create({
     fontSize: 16 * screenScale, 
     fontWeight: '500',
   },
-
   moreButton: {
     backgroundColor: '#d9d9d9',
     paddingTop: 8,
@@ -304,5 +360,28 @@ const styles = StyleSheet.create({
     paddingLeft: '10%',
     paddingRight: '10%',
     borderRadius: 15,
+  },
+  scrollView: {
+    width: '90%',
+    marginTop: '5%',
+    marginBottom: '5%',
+    borderRadius: 15,
+  },
+  dataItemActive: {
+    // backgroundColor: '#E9F3ED',
+    backgroundColor: Colors.BOLD_BACKGROUND,
+    'flex': 1,
+    justifyContent: 'space-between',
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 8,
+  },
+  dataItemInactive: {
+    backgroundColor: '#E9F3ED',
+    'flex': 1,
+    justifyContent: 'space-between',
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 8,
   },
 });

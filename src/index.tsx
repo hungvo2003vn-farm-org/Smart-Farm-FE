@@ -23,7 +23,6 @@
 //   );
 // }
 
-
 import React from "react";
 import * as Localization from "expo-localization";
 import { i18n, Language } from "@/Localization";
