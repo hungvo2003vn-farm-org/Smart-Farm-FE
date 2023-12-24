@@ -8,7 +8,7 @@ import { RootScreens } from "..";
 import {FontSize, Colors} from "@/Theme"
 import {WeatherScreenNavigatorProps} from "./WeatherContainer";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Root, useLazyGetWeatherQuery } from "@/Services";
+import {Root, useLazyGetWeatherQuery } from "@/Services";
 import HeaderDetail from "@/Components/header";
 import { ItemClick } from "native-base/lib/typescript/components/composites/Typeahead/useTypeahead/types";
 
@@ -32,8 +32,9 @@ export interface IWeatherProps {
 
 export const Weather = (props: IWeatherProps) => {
   const { data, onNavigate, isSuccess } = props;
+
   var moment = require('moment'); // require
-  moment().format(); 
+  // moment().format(); 
 
 
 
@@ -100,6 +101,7 @@ export const Weather = (props: IWeatherProps) => {
   let counter = 0;
 
   for (let i = 0; i < 24; i++) {
+    // console.log(moment(currentWeather.localTime).hour());
     if ((moment(currentWeather.localTime).hour() + i) === 24) {counter++};
     let item = {
       hour: String(((moment(currentWeather.localTime).hour() + i) % 24)).padStart(2,'0') + ':00',
@@ -145,7 +147,7 @@ export const Weather = (props: IWeatherProps) => {
       <View style={styles.body}>
       <View style={styles.leftNavigation}>
           <View style={styles.inactive}>
-            <Pressable onPress={() => props.onNavigate(RootScreens.MODEL)} style={styles.activePress}>
+            <Pressable onPress={() => onNavigate(RootScreens.MODEL)} style={styles.activePress}>
               <View style={styles.cycle}>
                 <FontAwesome5 name="seedling" size={24} color={Colors.BOLD_BUTTON} style={styles.iconStyle}/>
               </View>
@@ -155,7 +157,7 @@ export const Weather = (props: IWeatherProps) => {
             </Pressable>
           </View>
           <View style={styles.inactive}>
-            <Pressable onPress={() => props.onNavigate(RootScreens.SCHEDULE)} style={styles.activePress}>
+            <Pressable onPress={() => onNavigate(RootScreens.SCHEDULE)} style={styles.activePress}>
               <View style={styles.cycle}>
                 <FontAwesome5 name="list-ul" size={24} color={Colors.BOLD_BUTTON} style={styles.iconStyle} />
               </View>
@@ -165,7 +167,7 @@ export const Weather = (props: IWeatherProps) => {
             </Pressable>
           </View>
           <View style={styles.active}>
-            <Pressable onPress={() => props.onNavigate(RootScreens.WEATHER)} style={styles.activePress}>
+            <Pressable onPress={() => onNavigate(RootScreens.WEATHER)} style={styles.activePress}>
               <View style={styles.activeCycle}>
                 <AntDesign name="cloudo" size={24} color={Colors.BOLD_BUTTON} style={styles.iconStyle} />
               </View>
@@ -175,7 +177,7 @@ export const Weather = (props: IWeatherProps) => {
             </Pressable>
           </View>
           <View style={styles.inactive}>
-            <Pressable onPress={() => props.onNavigate(RootScreens.HISTORY)} style={styles.activePress}>
+            <Pressable onPress={() => onNavigate(RootScreens.HISTORY)} style={styles.activePress}>
               <View style={styles.cycle}>
                 <FontAwesome5 name="history" size={20} color={Colors.BOLD_BUTTON} style={styles.iconStyle} />
               </View>
@@ -262,7 +264,7 @@ export const Weather = (props: IWeatherProps) => {
             </View>
           </ScrollView>
         </View> 
-        : <View></View>}
+        : <View><Text> Đang cập nhật</Text></View>}
       </View>
     </SafeAreaView>
   )

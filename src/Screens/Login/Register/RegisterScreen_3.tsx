@@ -16,6 +16,7 @@ import { RootStackParamList } from "@/Navigation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootScreens } from "@/Screens";
 import { AntDesign } from '@expo/vector-icons';
+import { ScrollView } from "native-base";
 const RegisterLoginContainer = styled.View`
   width: 100%;
   height: 100%;
@@ -53,6 +54,7 @@ const InputDivContainer = styled.View`
   width: 90%;
   margin-vertical: 4px;
 `;
+
 const RegisterScreen03: FunctionComponent = () => {
   const navigaiton =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -68,19 +70,19 @@ const RegisterScreen03: FunctionComponent = () => {
           </View>
           <InputDivContainer>
             <AntDesign name="mail" size={24} color="black"  style={{marginHorizontal:10}}/>
-            <TextInput placeholder="Email"></TextInput>
+            <TextInput placeholder="Email" style={{ flexGrow: 1 , padding:10}}></TextInput>
           </InputDivContainer>
           <InputDivContainer>
             <AntDesign name="user" size={24} color="black"  style={{marginHorizontal:10}}/>
-            <TextInput placeholder="Tên đăng nhập"></TextInput>
+            <TextInput placeholder="Tên đăng nhập" style={{ flexGrow: 1 , padding:10}}></TextInput>
           </InputDivContainer>
           <InputDivContainer>
             <AntDesign name="lock" size={24} color="black" style={{marginHorizontal:10}} />
-            <TextInput placeholder="Mật khẩu"></TextInput>
+            <TextInput placeholder="Mật khẩu" style={{ flexGrow: 1 , padding:10}}></TextInput>
           </InputDivContainer>
           <InputDivContainer>
             <AntDesign name="lock" size={24} color="black" style={{marginHorizontal:10}} />
-            <TextInput placeholder="Xác nhận lại mật khẩu"></TextInput>
+            <TextInput placeholder="Xác nhận lại mật khẩu" style={{ flexGrow: 1 , padding:10}}></TextInput>
           </InputDivContainer>
           <View style={{width:'100%', paddingHorizontal:50, marginTop: 30}}>
             <RegularButton

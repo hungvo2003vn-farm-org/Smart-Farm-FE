@@ -18,8 +18,7 @@ export const WeatherContainer = ({navigation}:WeatherScreenNavigatorProps) => {
   const [weather, setWeather] = useState("Ho%20Chi%20Minh");
 
   const [fetchOne, { data, isSuccess, isLoading, isFetching, error }] =
-    useLazyGetWeatherQuery();
-
+  useLazyGetWeatherQuery();
   useEffect(() => {
     fetchOne(weather);
   }, [fetchOne, weather]);

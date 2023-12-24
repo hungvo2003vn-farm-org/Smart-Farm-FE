@@ -73,12 +73,12 @@ const MainScreen: FunctionComponent = () => {
           >
             PLANTSCAPE
           </BigText>
-          <SimpleLineIcons
+          {/* <SimpleLineIcons
             name="list"
             size={24}
             color="black"
             style={{ position: "absolute", right: 30 }}
-          />
+          /> */}
         </Header>
         <InputContainer style={{ marginHorizontal: 15, padding: 6 }}>
           <EvilIcons name="search" size={24} color="black" />
@@ -87,10 +87,10 @@ const MainScreen: FunctionComponent = () => {
             style={{ width: 100, flexGrow: 1, marginLeft: 10 }}
           ></TextInput>
         </InputContainer>
-        <Pressable onPress={()=>{navigation.navigate(RootScreens.ADDFARM)}} style={{alignSelf:'flex-end',padding: 4, marginHorizontal:10, marginTop: 7, borderRadius:10,backgroundColor:colors.lightgray, width: 110, height: 40, display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
+        <Pressable onPress={()=>{navigation.navigate(RootScreens.ADDFARM)}} style={{alignSelf:'flex-end',padding: 4, marginHorizontal:10, marginTop: 7, borderRadius:10,backgroundColor:colors.lightgray, width: 150, height: 40, display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
             <AntDesign name="pluscircle" size={18} color={colors.primary} />
             <RegularText textStyles={{textAlign:'center', marginHorizontal:5}}>
-              Add Farm
+              Thêm nông trại
             </RegularText>
         </Pressable>
         <ItemContainer>

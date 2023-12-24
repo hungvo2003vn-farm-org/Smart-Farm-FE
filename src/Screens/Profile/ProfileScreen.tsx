@@ -115,7 +115,9 @@ const ProfileScreen: FunctionComponent = () => {
               justifyContent: "space-around",
               width: "30%",
             }}
+
           >
+            <Pressable onPress={() => {navigation.navigate(RootScreens.UPDATEPROFILE);}}>
             <RegularText>Tài khoản của tôi</RegularText>
             <SmallText
               textStyles={{
@@ -125,6 +127,7 @@ const ProfileScreen: FunctionComponent = () => {
             >
               Thay đổi thông tin tài khoản
             </SmallText>
+            </Pressable>
           </Wrapper>
           <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
         </SubContainer>
@@ -156,7 +159,7 @@ const ProfileScreen: FunctionComponent = () => {
             <RegularText>Đăng xuất</RegularText>
             </Pressable>
           </Wrapper>
-          <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
+          {/* <MaterialIcons name="keyboard-arrow-right" size={24} color="black" /> */}
         </SubContainer>
         <RegularText
           textStyles={{

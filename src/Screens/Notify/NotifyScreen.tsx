@@ -54,7 +54,7 @@ const NotfifyScreen: FunctionComponent = () => {
         </Header>
         <Subcontainer style={{display:'flex'}}>
           <RegularText textStyles={{marginLeft: 10, marginVertical:10, color: '#64748b'}}>
-            Today
+            Hôm nay
           </RegularText>
           <View style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
             <NotifyItem
@@ -69,7 +69,7 @@ const NotfifyScreen: FunctionComponent = () => {
             ></NotifyItem>
           </View>
           <RegularText textStyles={{marginLeft: 10, marginVertical:10, color: '#64748b'}}>
-            Yesterday
+            Hôm qua
           </RegularText>
           <View style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
           <NotifyItem

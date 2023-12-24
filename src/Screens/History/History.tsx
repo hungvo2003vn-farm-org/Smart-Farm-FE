@@ -21,7 +21,7 @@ export const History = (props: {
   }) => {
     const DATA = [
       {
-        day: '26/10/2023',
+        day: '26.10.2023',
         data: [
           {
               model: 'Năng suất',
@@ -41,16 +41,10 @@ export const History = (props: {
               lengthTime: '10 phút',
               time: '17:00',
           },
-          {
-            model: 'Năng suất',
-            waterAmount: '02 lít',
-            lengthTime: '10 phút',
-            time: '17:00',
-          },
         ],
       },
       {
-        day: '25/10/2023',
+        day: '25.10.2023',
         data: [
           {
               model: 'Năng suất',
@@ -75,10 +69,10 @@ export const History = (props: {
     ];
 
     let bool = false;
-    let checked = DATA.slice(0,1);
+    let checked = DATA.slice(0,2);
     const [data, setData] = useState(checked);
     const [buttonState, setButtonState] = useState(true);
-    const [scroll, setScroll] = useState(false);
+    // const [scroll, setScroll] = useState(true);
 
     const changeData = (change: any) => {
       setData(change);
@@ -88,9 +82,9 @@ export const History = (props: {
       setButtonState(!buttonState);
     }
 
-    const changeScroll = () => {
-      setScroll(!scroll);
-    }
+    // const changeScroll = () => {
+    //   setScroll(!scroll);
+    // }
 
   return(
     <SafeAreaView style={{backgroundColor: Colors.AVT_BACKGROUND,}}>
@@ -158,7 +152,7 @@ export const History = (props: {
                 <SectionList
                     sections={data}
                     extraData={bool}
-                    scrollEnabled={scroll}
+                    scrollEnabled={true}
                     renderItem={({item}) => (
                       <View style={styles.historyInfoList}>
                           <View style={styles.historyInfoItem}>
@@ -188,7 +182,7 @@ export const History = (props: {
                 />
                 {buttonState? 
                 <View>
-                  <Pressable style={styles.activePress} onPress={() => {changeData(DATA); changeState(); changeScroll(); bool = true;}}>
+                  <Pressable style={styles.activePress} onPress={() => {changeData(DATA); changeState(); bool = true;}}>
                     <View style={styles.moreButton}>
                       <Text style={styles.regularText}>Xem thêm</Text>
                     </View>

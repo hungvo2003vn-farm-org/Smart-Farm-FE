@@ -314,7 +314,7 @@ export const Schedule = (props: {
             animationType="slide"
           >
             <View style={styles.confirmUI}>
-              <Text style={styles.confirmTitle}>Bạn có muốn xóa</Text>
+              <Text style={styles.confirmTitle}>Xóa lịch trình này?</Text>
               <View style={{
                 flexDirection: 'row', paddingHorizontal: 30,
                 justifyContent: 'space-between'

@@ -13,17 +13,17 @@ import {
   REGISTER,
 } from "redux-persist";
 import { homeReducers, themeReducers } from "./reducers";
+import { WEATHER_API } from "@/Services/weather/base";
 
 const reducers = combineReducers({
-  api: API.reducer,
-  theme: themeReducers,
-  home: homeReducers,
+  //api: API.reducer,
+  //api: WEATHER_API.reducer,
+  [WEATHER_API.reducerPath]: WEATHER_API.reducer,
 });
 
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  whitelist: ["theme"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -35,7 +35,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(API.middleware);
+    }).concat(WEATHER_API.middleware);
 
     // if (__DEV__ && !process.env.JEST_WORKER_ID) {
     //   const createDebugger = require("redux-flipper").default;

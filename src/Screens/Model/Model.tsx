@@ -1,7 +1,7 @@
 import { i18n, LocalizationKey } from "@/Localization";
 import React , {useState} from "react";
 import { FontAwesome5, AntDesign, Entypo, MaterialCommunityIcons, MaterialIcons, Ionicons} from "@expo/vector-icons";
-import { View, Text, StyleSheet, Image, Pressable, Dimensions, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Image,  Dimensions, ScrollView, Modal, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { RootScreens } from "..";
 import {FontSize, Colors} from "@/Theme"
@@ -19,24 +19,45 @@ export interface ModelProps {
 export const Model= (props: {
     onNavigate: (string: RootScreens) => void;
   }) => {
+    const [modelstatus, setModelStatus] = useState(1);
+    const [isConfirmationVisible, setConfirmationVisible] = useState(false); //Confirm delete UI
+    const [activeModelId, setActiveModelId] = useState(1); //
+    const [curModelId, setCurModelId] = useState(0); //
+    
+    //Handle delete water schdule
+    const handlePress = (id: any)  => {
+      setConfirmationVisible(true);
+      setCurModelId(id);
+    };
+  
+    const handleConfirm= () => {
+      // Handle confirmation delete water schedule logic here
+      setConfirmationVisible(false);
+      setActiveModelId(curModelId);
+    };
+  
+    const handleCancel = () => {
+      // Handle cancellation delete water schedule logic here
+      setConfirmationVisible(false);
+    };
     const data = [
       {
-        name: 'Nắng suất',
+        id: 1,
+        name: 'Năng suất',
         source: 'Nhà cung cấp',
         des: 'Sử dụng lượng nước phù hợp để tạo ra năng suất tối ưu',
-        active: true,
       },
       {
-        model: 'Cân bằng',
+        id: 2,
+        name: 'Cân bằng',
         source: 'Nhà cung cấp',
         des: ' Sử dụng lượng nước vừa đủ để tạo ra năng suất vừa đủ',
-        active: false,
       },
       {
-        model: 'Tiết kiệm',
+        id: 3,
+        name: 'Tiết kiệm',
         source: 'Nhà cung cấp',
         des: 'Sử dụng lượng nước tiết kiệm, vẫn đảm bảo cây phát triển',
-        active: false,
       }
     ];
     
@@ -91,9 +112,10 @@ export const Model= (props: {
           <ScrollView style={styles.scrollView}>
           {data.map((item, index) => {
             return (
-              <View key={index} style={{ flexDirection: 'row' }}>
+              <Pressable  key={index}  onPress={()=>{handlePress(item.id);}}>
+              <View style={{ flexDirection: 'row' }}>
                 {
-                item.active? 
+                item.id == activeModelId? 
                   (
                     <View style={styles.dataItemActive}>
                       <Text >
@@ -122,8 +144,29 @@ export const Model= (props: {
                 
                 }
               </View>
+              </Pressable>
               );
               })}
+          <Modal
+            transparent={true}
+            visible={isConfirmationVisible}
+            animationType="slide"
+          >
+            <View style={styles.confirmUI}>
+              <Text style={styles.confirmTitle}>Chọn mô hình này?</Text>
+              <View style={{
+                flexDirection: 'row', paddingHorizontal: 30,
+                justifyContent: 'space-between'
+              }}>
+                <Pressable style={styles.confirmButton} onPress={handleConfirm}>
+                  <Text style={styles.buttonText}>Chọn</Text>
+                </Pressable>
+                <Pressable style={styles.cancelButton} onPress={handleCancel}>
+                  <Text style={styles.buttonText}>Hủy</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
           </ScrollView>
         </View>
       </View>
@@ -383,5 +426,39 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 8,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  confirmButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    backgroundColor: '#416D50',
+  },
+  cancelButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    backgroundColor: '#B83535',
+  },
+  confirmTitle: {
+    color: Colors.BOLD_BUTTON,
+    fontSize: FontSize.TITLE,
+    fontWeight: '500',
+    marginBottom: 15,
+    marginTop: 15,
+    alignSelf: 'center',
+  },
+  confirmUI: {
+    top: '40%',
+    padding: 30,
+    backgroundColor: 'white',
+    marginHorizontal: 30,
+    borderRadius: 16
   },
 });
