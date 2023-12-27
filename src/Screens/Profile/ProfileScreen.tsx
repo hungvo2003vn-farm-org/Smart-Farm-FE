@@ -18,6 +18,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/Navigation";
 import { RootScreens } from "..";
+import { useSelector } from "react-redux";
 const ProfileScreenContainer = styled(Container)`
   width: 100%;
   flex: 1;
@@ -59,6 +60,8 @@ const Circle = styled.View`
 const ProfileScreen: FunctionComponent = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const profile = useSelector((state) => state.profile);
+  console.log(profile);
   return (
     <SafeAreaView
       style={{ flex: 1, width: "100%", backgroundColor: "#F9F9F9" }}
@@ -85,7 +88,7 @@ const ProfileScreen: FunctionComponent = () => {
               fontSize: 20,
             }}
           >
-            Trần Văn A
+            {profile.name}
           </RegularText>
           <FontAwesome
             name="pencil"

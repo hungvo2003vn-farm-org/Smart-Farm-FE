@@ -78,11 +78,11 @@ const RegisterScreen03: FunctionComponent = () => {
           </InputDivContainer>
           <InputDivContainer>
             <AntDesign name="lock" size={24} color="black" style={{marginHorizontal:10}} />
-            <TextInput placeholder="Mật khẩu" style={{ flexGrow: 1 , padding:10}}></TextInput>
+            <TextInput secureTextEntry={true} placeholder="Mật khẩu" style={{ flexGrow: 1 , padding:10}}></TextInput>
           </InputDivContainer>
           <InputDivContainer>
             <AntDesign name="lock" size={24} color="black" style={{marginHorizontal:10}} />
-            <TextInput placeholder="Xác nhận lại mật khẩu" style={{ flexGrow: 1 , padding:10}}></TextInput>
+            <TextInput secureTextEntry={true} placeholder="Xác nhận lại mật khẩu" style={{ flexGrow: 1 , padding:10}}></TextInput>
           </InputDivContainer>
           <View style={{width:'100%', paddingHorizontal:50, marginTop: 30}}>
             <RegularButton

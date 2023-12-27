@@ -5,7 +5,16 @@ import styled from "styled-components/native";
 import { Container } from "../../Components/shared";
 import { colors } from "../../Components/colors";
 import RegularText from "@/Components/texts/RegularText";
-import { SafeAreaView } from "react-native";
+import {  StyleSheet,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  Pressable,
+  Dimensions,
+  View,} from "react-native";
 import BigText from "@/Components/texts/BigText";
 import logo from "../../../assets//bg/logocay.png";
 import staticImage from "../../../assets//bg/static.png";
@@ -51,6 +60,31 @@ const Divider = styled.View`
   margin-top: 2px;
   margin-bottom: 5px;
 `;
+
+const screenWidth = Dimensions.get('window').width;
+const screenScale = screenWidth / 375;
+
+const images = [
+  {
+    source: require("../../../assets/img/News/image7.png"),
+    title: "img1",
+  },
+  {
+    source: require("../../../assets/img/News/image7.png"),
+    title: "img2",
+  },
+];
+
+const images2 = [
+  {
+    source: require("../../../assets/img/News/image7.png"),
+    title: "ảnh dưới 1",
+  },
+  {
+    source: require("../../../assets/img/News/image7.png"),
+    title: "ảnh dưới 2",
+  },
+];
 const StatisticScreen: FunctionComponent = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: `${colors.white}` }}>
@@ -135,6 +169,41 @@ const StatisticScreen: FunctionComponent = () => {
             </TextButton>
           </Wrapper>
         </SubContainer>
+        <ScrollView>
+                {images2.map((image, index) => (
+                  <View
+                    key={index}
+                    style={{
+                      width: 345 * screenScale,
+                      height: 200 * screenScale,
+                      marginHorizontal: 15,
+                      borderRadius: 10,
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <Image
+                      source={image.source}
+                      style={{
+                        width: "100%",
+                        height: "80%",
+                        borderBottomLeftRadius: 10,
+                        borderBottomRightRadius: 10,
+
+                      }}
+                      
+                    />
+                    <Text
+                    style={{
+                      textAlign: 'center',
+                      marginTop: 5,
+                      fontSize: 16, // Adjust as needed
+                    }}
+                  >
+                    {image.title}
+                  </Text>
+                  </View>
+                ))}
+              </ScrollView> 
       </StatisticContainer>
     </SafeAreaView>
   );

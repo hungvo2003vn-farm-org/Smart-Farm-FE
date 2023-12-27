@@ -21,48 +21,13 @@ export const History = (props: {
   }) => {
     const DATA = [
       {
-        day: '26.10.2023',
+        day: '27.10.2023',
         data: [
           {
               model: 'Năng suất',
               waterAmount: '02 lít',
               lengthTime: '10 phút',
               time: '08:20',
-          },
-          {
-              model: 'Năng suất',
-              waterAmount: '02 lít',
-              lengthTime: '10 phút',
-              time: '13:10',
-          },
-          {
-              model: 'Năng suất',
-              waterAmount: '02 lít',
-              lengthTime: '10 phút',
-              time: '17:00',
-          },
-        ],
-      },
-      {
-        day: '25.10.2023',
-        data: [
-          {
-              model: 'Năng suất',
-              waterAmount: '02 lít',
-              lengthTime: '10 phút',
-              time: '08:20',
-          },
-          {
-              model: 'Năng suất',
-              waterAmount: '02 lít',
-              lengthTime: '10 phút',
-              time: '13:10',
-          },
-          {
-              model: 'Năng suất',
-              waterAmount: '02 lít',
-              lengthTime: '10 phút',
-              time: '17:00',
           },
         ],
       },

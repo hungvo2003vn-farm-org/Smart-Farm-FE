@@ -14,12 +14,14 @@ import {
 } from "redux-persist";
 import { homeReducers, themeReducers } from "./reducers";
 import { WEATHER_API } from "@/Services/weather/base";
-import { farnReducers } from "./reducers/farm";
+import { farmReducers} from "./reducers/farm";
+import { profileReducers } from "./reducers/profile";
 
 const reducers = combineReducers({
   //api: API.reducer,
   //api: WEATHER_API.reducer,
-  farm: farnReducers,
+  farm: farmReducers,
+  profile: profileReducers,
   [WEATHER_API.reducerPath]: WEATHER_API.reducer,
 });
 

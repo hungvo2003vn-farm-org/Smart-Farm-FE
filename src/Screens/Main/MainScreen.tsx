@@ -19,6 +19,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "@/Navigation";
 import { RootScreens } from "..";
+import { useSelector } from "react-redux";
+import { View } from "react-native";
 const MainScreenContainer = styled.View`
   background-color: ${colors.white};
   flex: 1;
@@ -53,6 +55,7 @@ const ItemContainer = styled.ScrollView`
 `;
 const MainScreen: FunctionComponent = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const data = useSelector((state) => state.farm.farmlist);
   return (
     <SafeAreaView
       style={{
@@ -94,12 +97,16 @@ const MainScreen: FunctionComponent = () => {
             </RegularText>
         </Pressable>
         <ItemContainer>
-          <TreeItem 
-            treeName={"Cây xoài"}
-            model={"Năng suất"}
-            timeOn={"10:00:00"}
-          ></TreeItem>
-        </ItemContainer>
+            {data.map((item, index) => {
+              console.log(item);
+            return (
+            <View key={index}>
+              {/* <TreeItem {...item.id} {...item.name} {...item.model} {...item.timeOn}></TreeItem> */}
+              <TreeItem id = {item.id} name = {item.name} model= {item.model} timeOn={item.timeOn}></TreeItem>
+              </View>
+              )}
+            )}
+            </ItemContainer>
       </MainScreenContainer>
     </SafeAreaView>
   );

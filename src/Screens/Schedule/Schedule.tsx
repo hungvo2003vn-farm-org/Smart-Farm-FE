@@ -5,13 +5,16 @@ import { View, Text, StyleSheet, Image, Pressable, ScrollView, TouchableOpacity,
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { HStack, Spinner, Heading } from "native-base";
-import { User } from "@/Services";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/Navigation";
 import { RootScreens } from "..";
 import { FontSize, Colors } from "@/Theme"
 import { ScheduleScreenNavigatorProps } from "./ScheduleContainer";
 import HeaderDetail from "@/Components/header";
+import { useDispatch, useSelector } from "react-redux";
+import { addSchedule, deleteSchedule, setCurSche } from "@/Store/reducers/farm";
+import { v4 } from "uuid";
+
 const screenWidth = Dimensions.get('window').width;
 const screenScale = screenWidth / 375;
 export interface IScheduleProps {
@@ -50,56 +53,6 @@ export interface IScheduleProps {
 export const Schedule = (props: {
   onNavigate: (string: RootScreens) => void;
 }) => {
-  //Define State
-  const [modelstatus, setModelStatus] = useState(1);
-  const [isConfirmationVisible, setConfirmationVisible] = useState(false); //Confirm delete UI
-  const [isCreateScheduleVisible, setCreateScheduleVisible] = useState(false); //Confirm create schedule UI
-  const [inputDate, setInputDate] = useState(''); // Select date in create schedule
-  const [timeOn, setTimeOn] = useState(''); 
-  const [duration, setDuration] = useState(''); 
-  const [amount, setAmount] = useState(''); 
-
-  //Handle create schedule
-  const handleCreateSchedulePress = () => {
-    setCreateScheduleVisible(true);
-  };
-
-  const handleCreateScheduleConfirm = () => {
-    // Handle confirmation delete water schedule logic here
-    setCreateScheduleVisible(false);
-  };
-
-  const handleCreateScheduleCancel = () => {
-    // Handle cancellation delete water schedule logic here
-    setCreateScheduleVisible(false);
-  };
-  //Handle delete water schdule
-  const handlePress = () => {
-    setConfirmationVisible(true);
-  };
-
-  const handleConfirm = () => {
-    // Handle confirmation delete water schedule logic here
-    setConfirmationVisible(false);
-  };
-
-  const handleCancel = () => {
-    // Handle cancellation delete water schedule logic here
-    setConfirmationVisible(false);
-  };
-  //Handle choose date
-  const handleDateChange = (text: string) => {
-    setInputDate(text);
-  };
-  const handleTimeOnChange = (text: string) => {
-    setTimeOn(text);
-  };
-  const handleDurationChange = (text: string) => {
-    setDuration(text);
-  };
-  const handleAmountChange = (text: string) => {
-    setAmount(text);
-  };
   const scenario = [
     {
       sche: [
@@ -116,31 +69,72 @@ export const Schedule = (props: {
       ]
     }
   ]
-  const data = [
-    {
-      date: '18/10/2023',
-      sche: [
-        {
-          waterHour: '07:00',
-          waterTime: '10:00',
-          water: '500',
-        },
-        {
-          waterHour: '08:00',
-          waterTime: '12:00',
-          water: '700',
-        }
-      ]
-    }
+  var data = useSelector((state) => state.farm.selectedFarm.sche);
+  const [isConfirmationVisible, setConfirmationVisible] = useState(false); //Confirm delete UI
+  const [isCreateScheduleVisible, setCreateScheduleVisible] = useState(false); //Confirm create schedule UI
+  // const [inputDate, setInputDate] = useState(''); // Select date in create schedule
+  const [timeOn, setTimeOn] = useState(''); 
+  const [duration, setDuration] = useState(''); 
+  const [amount, setAmount] = useState(''); 
+  // const [dataState, setDataState] = useState(data);
+  const curSche = useSelector((state) => state.farm.curSche);
+  //Handle create schedule
+  const handleCreateSchedulePress = () => {
+    setCreateScheduleVisible(true);
+  };
+  const dispatch = useDispatch()
 
-  ]
+  const handleCreateScheduleConfirm = () => {
+    // Handle confirmation delete water schedule logic here
+    setCreateScheduleVisible(false);
+    dispatch(addSchedule({
+    id: v4(),
+    waterHour: timeOn,
+    waterTime: duration,
+    water: amount,}))
+  };
+
+  const handleCreateScheduleCancel = () => {
+    // Handle cancellation delete water schedule logic here
+    setCreateScheduleVisible(false);
+  };
+  //Handle delete water schdule
+  const handlePress = (item: any) => {
+    setConfirmationVisible(true);
+    dispatch(setCurSche(item));
+  };
+
+  const handleConfirm = () => {
+    // Handle confirmation delete water schedule logic here
+    setConfirmationVisible(false);
+    dispatch(deleteSchedule())
+  };
+
+  const handleCancel = () => {
+    // Handle cancellation delete water schedule logic here
+    setConfirmationVisible(false);
+  };
+  //Handle choose date
+  // const handleDateChange = (text: string) => {
+  //   setInputDate(text);
+  // };
+  const handleTimeOnChange = (text: string) => {
+    setTimeOn(text);
+  };
+  const handleDurationChange = (text: string) => {
+    setDuration(text);
+  };
+  const handleAmountChange = (text: string) => {
+    setAmount(text);
+  };
+
   return (
     <SafeAreaView>
       <StatusBar style="auto" />
       <HeaderDetail></HeaderDetail>
       <View style={styles.body}>
       <View style={styles.leftNavigation}>
-          <View style={styles.inactive}>
+      <View style={styles.inactive}>
             <Pressable onPress={() => props.onNavigate(RootScreens.MODEL)} style={styles.activePress}>
               <View style={styles.cycle}>
                 <FontAwesome5 name="seedling" size={24} color={Colors.BOLD_BUTTON} style={styles.iconStyle}/>
@@ -176,7 +170,7 @@ export const Schedule = (props: {
                 <FontAwesome5 name="history" size={20} color={Colors.BOLD_BUTTON} style={styles.iconStyle} />
               </View>
               <View style={styles.intro}>
-                <Text style={styles.activeContent}>Lịch sử</Text>
+                <Text style={styles.inactiveContent}>Lịch sử</Text>
               </View>
             </Pressable>
           </View>
@@ -263,7 +257,9 @@ export const Schedule = (props: {
               <Text style={styles.addScheduleText}>Thêm lịch trình</Text>
             </View>
           </TouchableOpacity>
-
+          <View style={styles.modelItem}>
+          <Text style={styles.titleView} >Lịch trình của tôi</Text>
+          </View>
           {data.map((item, index) => {
             return (
               <View key={index} style={styles.modelItem}>
@@ -271,39 +267,30 @@ export const Schedule = (props: {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                 }}>
-                  <Text style={styles.titleView} >Lịch trình của tôi</Text>
+                  
                   {/* <TouchableOpacity onPress={() => { }}>
                     <AntDesign name="down" size={24} color="black" />
                   </TouchableOpacity> */}
                 </View>
-                <View style={{paddingLeft: '2%', paddingTop: '2%'}}>
+                {/* <View style={{paddingLeft: '2%', paddingTop: '2%'}}>
                         <Text style={styles.regularText}>{item.date}</Text>
-                </View>
-                {
-                  <View>
-                    {item['sche'] && item['sche'].map((waterTime, index) => {
-                      return (
+                </View> */}
                         <View key={index} style={{ flexDirection: 'row' }}>
                           <View style={styles.dataItem}>
                             <Text>
-                              Giờ tưới: {waterTime.waterHour}
+                              Giờ tưới: {item.waterHour}
                             </Text>
                             <Text>
-                              Thời gian: {waterTime.waterTime}
+                              Thời gian: {item.waterTime}
                             </Text>
                             <Text>
-                              Lượng nước: {waterTime.water}
+                              Lượng nước: {item.water}
                             </Text>
                           </View>
-                          <TouchableOpacity style={styles.deleteBtn} onPress={handlePress}>
+                          <TouchableOpacity style={styles.deleteBtn} onPress={() => {handlePress(item)}}>
                             <Feather name="trash-2" size={24} color="black" />
                           </TouchableOpacity>
                         </View>
-
-                      );
-                    })}
-                  </View>
-                }
               </View>
             )
           })}
@@ -336,7 +323,7 @@ export const Schedule = (props: {
             <View style={styles.createScheduleUI}>
               <Text style={styles.confirmTitle}>Thêm lịch tưới</Text>
               <View>
-                <Text style={styles.scheduleText}>Ngày tưới:</Text>
+                {/* <Text style={styles.scheduleText}>Ngày tưới:</Text>
                 <View style={styles.borderBoxField}>
                   <TextInput
                     style={styles.scheduleTextInput}
@@ -345,8 +332,8 @@ export const Schedule = (props: {
                     value={inputDate}
                     keyboardType="numbers-and-punctuation"
                   />
-                </View>
-                <Text style={styles.scheduleText}>Thời điểm tới (giờ:phút):</Text>
+                </View>  */}
+                <Text style={styles.scheduleText}>Thời điểm tưới (giờ:phút):</Text>
                 <View style={styles.borderBoxField}>
                   <TextInput
                     style={styles.scheduleTextInput}
@@ -356,7 +343,7 @@ export const Schedule = (props: {
                     keyboardType="numbers-and-punctuation"
                   />
                 </View>
-                <Text style={styles.scheduleText}>Thời lượng tới (phút:giây):</Text>
+                <Text style={styles.scheduleText}>Thời lượng tưới (phút:giây):</Text>
                 <View style={styles.borderBoxField}>
                   <TextInput
                     style={styles.scheduleTextInput}

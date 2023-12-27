@@ -10,9 +10,10 @@ import BigText from "@/Components/texts/BigText";
 import { colors } from "@/Components/colors";
 import RegularButton from "@/Components/button/RegularButton";
 // import { addItem } from "@/Store/reducers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { TreeItemProps } from "@/Components/item/types";
 import {Picker} from '@react-native-picker/picker';
+import { addFarm, updateInputAcraege, updateInputFarmName, updateInputLocation, updateInputPlant } from "@/Store/reducers/farm";
 
 const SubContainer = styled.View`
   height: 60px;
@@ -39,8 +40,33 @@ const AddFarmScreen: FunctionComponent = () => {
     //     timeOn: '',
     //   });
     // };
-    const [selectedLocation, setSelectedLocation] = useState('');
-    const [selectedPlant, setSelectedPlant] = useState('');
+    const dispatch = useDispatch();
+    // const [selectedLocation, setSelectedLocation] = useState('');
+    // const [selectedPlant, setSelectedPlant] = useState('');
+    // const [area, setArea] = useState('');
+    // const [name, setName] = useState('');
+
+
+    const inputFarmName = useSelector((state) => state.farm.inputFarmName);
+    const inputPlant = useSelector((state) => state.farm.inputPlant);
+    const inputLocation = useSelector((state) => state.farm.inputLocation);
+    const inputAcraege = useSelector((state) => state.farm.inputAcraege);
+    const handleFarmNameChange = (e) => {
+      dispatch(updateInputFarmName(e));
+    };
+  
+    const handlePlantChange = (e) => {
+      // setSelectedPlant(e);
+      dispatch(updateInputPlant(e));
+    };
+    const handleLocationChange = (e) => {
+      // setSelectedLocation(e); 
+      dispatch(updateInputLocation(e));
+    };
+    const handleAcraegeChange = (e) => {
+      dispatch(updateInputAcraege(e));
+    };
+    
   return (
     <SafeAreaView style={{ backgroundColor: "#F9F9F9", flex: 1 }}>
       <SubContainer style={{backgroundColor:"#F9F9F9"}}>
@@ -61,10 +87,8 @@ const AddFarmScreen: FunctionComponent = () => {
           <TextInput
             placeholder="Tên nông trại"
             style={{ flexGrow: 1 , padding:10}}
-            // value={newItem.treeName}
-            // onChangeText={(text) =>
-            //   setNewItem({ ...newItem, treeName: text })
-            //}
+            value={inputFarmName}
+            onChangeText= {handleFarmNameChange}
           ></TextInput>
         </SubContainer>
         {/* <SubContainer> */}
@@ -75,44 +99,39 @@ const AddFarmScreen: FunctionComponent = () => {
           <MaterialIcons name="keyboard-arrow-down" size={24} color="black" /> */}
           <SubContainer>
           <Picker
-            selectedValue={selectedLocation}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedLocation(itemValue)
-            }
+            selectedValue={inputLocation}
+            onValueChange={(itemValue, itemIndex) =>(handleLocationChange(itemValue))}
             // style={{backgroundColor: colors.white, height: 60, marginVertical: 17, padding: 10, marginHorizontal: 10, borderRadius: 20}}
             style={{ flexGrow: 1 , padding:10}}
             >
-            <Picker.Item label="Tp.Hồ Chí Minh"  value="Hồ Chí Minh" />
-            <Picker.Item label="Đồng Tháp" value="Đồng " />
+            <Picker.Item label="Tp.Hồ Chí Minh"  value="Tp.Hồ Chí Minh" />
+            <Picker.Item label="Đồng Tháp" value="Đồng Tháp" />
           </Picker>
         </SubContainer>
         <SubContainer>
           <Picker
-            selectedValue={selectedPlant}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedPlant(itemValue)
-            }
+            selectedValue={inputPlant}
+            // selectedValue={inputPlant}
+            onValueChange={(itemValue, itemIndex) =>( handlePlantChange(itemValue))}
             // style={{backgroundColor: colors.white, height: 60, marginVertical: 17, padding: 10, marginHorizontal: 10, borderRadius: 20}}
             style={{ flexGrow: 1 , padding:10}}
             >
+            <Picker.Item label="Cây cam" value="Cây cam" />
             <Picker.Item label="Cây xoài"  value="Cây xoài" />
-            <Picker.Item label="Cây cam" value="Cây xoài" />
           </Picker>
         </SubContainer>
         <SubContainer>
           <TextInput
             placeholder="Diện tích"
             style={{ flexGrow: 1 , padding:10}}
-            // value={newItem.moisture}
-            // onChangeText={(text) =>
-            //   setNewItem({ ...newItem, moisture: text })
-            // }
+            value={inputAcraege}
+            onChangeText= {handleAcraegeChange}
           ></TextInput>
           {/* <MaterialIcons name="keyboard-arrow-down" size={24} color="black" /> */}
         </SubContainer>
         <RegularButton
             onPress={() => {
-              // handleAddItem
+              dispatch(addFarm())
               navigation.goBack();
             }}
             btnStyles={{ marginVertical: 40, width: 130 , alignSelf:'center'}}

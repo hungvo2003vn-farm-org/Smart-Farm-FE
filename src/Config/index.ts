@@ -8,21 +8,26 @@ export const FarmListJson = [{
   id: v4(),
   name: 'Cây xoài Đồng Tháp',
   date: '22/08/2023',
-  model: 'Năng suất',
+  model: {
+    id: 1,
+    name: 'Năng suất'
+  },
   timeOn: '7:00:00',
   plant: 'Cây xoài',
   acraege: '100',
   location: 'Đồng Nai',
   sche: [
     {
+      id: v4(),
       waterHour: '07:00',
       waterTime: '10:00',
       water: '500',
     },
     {
+      id: v4(),
       waterHour: '08:00',
       waterTime: '12:00',
       water: '700',
     }
-  ]
+  ],
 }];
