@@ -10,7 +10,7 @@ export interface Model {
 
 const modelApi = API.injectEndpoints({
   endpoints: (build) => ({
-    getModel: build.query<Model, string>({
+    getModel: build.query({
       query: () => `model`,
     }),
   }),

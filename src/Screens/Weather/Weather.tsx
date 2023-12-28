@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import {Root, useLazyGetWeatherQuery } from "@/Services";
 import HeaderDetail from "@/Components/header";
 import { ItemClick } from "native-base/lib/typescript/components/composites/Typeahead/useTypeahead/types";
+import { useSelector } from "react-redux";
 
 const screenWidth = Dimensions.get('window').width;
 const screenScale = screenWidth / 375;
@@ -32,7 +33,8 @@ export interface IWeatherProps {
 
 export const Weather = (props: IWeatherProps) => {
   const { data, onNavigate, isSuccess } = props;
-
+  var dataState = useSelector((state) => state.apiweather.data);
+  console.log(dataState);
   var moment = require('moment'); // require
   // moment().format(); 
 

@@ -20,6 +20,7 @@ import logo from "../../../assets//bg/logocay.png";
 import staticImage from "../../../assets//bg/static.png";
 import RegularButton from "@/Components/button/RegularButton";
 import TextButton from "@/Components/button/TextButton";
+import { Colors } from "@/Theme";
 const StatisticContainer = styled(Container)`
   justify-content: flex-start;
   align-items: center;
@@ -78,11 +79,11 @@ const images = [
 const images2 = [
   {
     source: require("../../../assets/img/News/image7.png"),
-    title: "ảnh dưới 1",
+    title: "Vườn cam đạt chứng nhận hữu cơ USDA của chàng trai 'gàn dở'",
   },
   {
     source: require("../../../assets/img/News/image7.png"),
-    title: "ảnh dưới 2",
+    title: "Vườn cam đạt chứng nhận hữu cơ USDA của chàng trai 'gàn dở'",
   },
 ];
 const StatisticScreen: FunctionComponent = () => {
@@ -175,10 +176,11 @@ const StatisticScreen: FunctionComponent = () => {
                     key={index}
                     style={{
                       width: 345 * screenScale,
-                      height: 200 * screenScale,
+                      height: 220 * screenScale,
                       marginHorizontal: 15,
                       borderRadius: 10,
                       overflow: 'hidden',
+                      marginVertical: 5,
                     }}
                   >
                     <Image
@@ -193,11 +195,13 @@ const StatisticScreen: FunctionComponent = () => {
                       
                     />
                     <Text
-                    style={{
-                      textAlign: 'center',
-                      marginTop: 5,
-                      fontSize: 16, // Adjust as needed
-                    }}
+                    // style={{
+                    //   textAlign: 'left',
+                    //   marginTop: 5,
+                    //   fontSize: 16, // Adjust as needed
+                    //   marginLeft: 10,
+                    // }}
+                    style={styles.historyInfoContent}
                   >
                     {image.title}
                   </Text>
@@ -208,4 +212,11 @@ const StatisticScreen: FunctionComponent = () => {
     </SafeAreaView>
   );
 };
+const styles = StyleSheet.create({
+  historyInfoContent: {
+    color: Colors.BOLD_BUTTON, 
+    fontSize: 16 * screenScale, 
+    fontWeight: '500',
+  },
+});
 export default StatisticScreen;
