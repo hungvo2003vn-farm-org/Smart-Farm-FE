@@ -7825,6 +7825,11 @@
   dependencies:
     "moment" "^2.22.0"
 
+"react-native-dropdown-select-list-expo@^3.0.0":
+  "integrity" "sha512-2b2ngsAcPBErQsjvrPAUc0BWMS5drW1So1Wv8DoufTOqa49Bh93EV5QCTivKGG2Dh8t26GvWpZWEzZ3CgWCaJA=="
+  "resolved" "https://registry.npmjs.org/react-native-dropdown-select-list-expo/-/react-native-dropdown-select-list-expo-3.0.0.tgz"
+  "version" "3.0.0"
+
 "react-native-gradle-plugin@^0.71.19":
   "integrity" "sha512-1dVk9NwhoyKHCSxcrM6vY6cxmojeATsBobDicX0ZKr7DgUF2cBQRTKsimQFvzH8XhOVXyH8p4HyDSZNIFI8OlQ=="
   "resolved" "https://registry.npmjs.org/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.19.tgz"
