@@ -103,7 +103,7 @@ const StatisticScreen: FunctionComponent = () => {
               color: "#0D986A",
             }}
           >
-            PLANTSCAPE
+            FARM GURU
           </BigText>
         </Header>
         <SubContainer>

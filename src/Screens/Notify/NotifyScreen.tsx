@@ -49,7 +49,7 @@ const NotfifyScreen: FunctionComponent = () => {
               color: "#0D986A",
             }}
           >
-            PLANTSCAPE
+            FARM GURU
           </BigText>
         </Header>
         <Subcontainer style={{display:'flex'}}>

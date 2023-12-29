@@ -7,6 +7,13 @@ export interface Farm {
   timeOn: string;
 }
 
+export interface Farm {
+  id: number;
+  name: string;
+  model: string;
+  timeOn: string;
+}
+
 
 const farmApi = API.injectEndpoints({
   endpoints: (build) => ({

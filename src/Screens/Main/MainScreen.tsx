@@ -74,7 +74,7 @@ const MainScreen: FunctionComponent = () => {
               color: "#0D986A",
             }}
           >
-            PLANTSCAPE
+            FARM GURU
           </BigText>
           {/* <SimpleLineIcons
             name="list"

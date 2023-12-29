@@ -29,6 +29,7 @@ const Header = styled.View`
   width: 100%;
   height: 90px;
   flex-direction: row;
+  justify-content: space-between;
   margin-bottom: 22px;
 `;
 const UserImageContainer = styled.Image`

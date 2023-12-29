@@ -85,7 +85,7 @@ const NewsScreen: FunctionComponent = () => {
               color: "#0D986A",
             }}
           >
-            PLANTSCAPE
+            FARM GURU
           </BigText>
         </Header>
         <View style={{ display: "flex", width: 345, alignItems: "flex-start", gap: 70}}>
