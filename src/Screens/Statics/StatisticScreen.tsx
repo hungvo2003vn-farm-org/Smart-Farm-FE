@@ -5,12 +5,22 @@ import styled from "styled-components/native";
 import { Container } from "../../Components/shared";
 import { colors } from "../../Components/colors";
 import RegularText from "@/Components/texts/RegularText";
-import { SafeAreaView } from "react-native";
+import {  StyleSheet,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  Pressable,
+  Dimensions,
+  View,} from "react-native";
 import BigText from "@/Components/texts/BigText";
 import logo from "../../../assets//bg/logocay.png";
 import staticImage from "../../../assets//bg/static.png";
 import RegularButton from "@/Components/button/RegularButton";
 import TextButton from "@/Components/button/TextButton";
+import { Colors } from "@/Theme";
 const StatisticContainer = styled(Container)`
   justify-content: flex-start;
   align-items: center;
@@ -51,6 +61,31 @@ const Divider = styled.View`
   margin-top: 2px;
   margin-bottom: 5px;
 `;
+
+const screenWidth = Dimensions.get('window').width;
+const screenScale = screenWidth / 375;
+
+const images = [
+  {
+    source: require("../../../assets/img/News/image7.png"),
+    title: "img1",
+  },
+  {
+    source: require("../../../assets/img/News/image7.png"),
+    title: "img2",
+  },
+];
+
+const images2 = [
+  {
+    source: require("../../../assets/img/News/image7.png"),
+    title: "Vườn cam đạt chứng nhận hữu cơ USDA của chàng trai 'gàn dở'",
+  },
+  {
+    source: require("../../../assets/img/News/image7.png"),
+    title: "Vườn cam đạt chứng nhận hữu cơ USDA của chàng trai 'gàn dở'",
+  },
+];
 const StatisticScreen: FunctionComponent = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: `${colors.white}` }}>
@@ -68,7 +103,7 @@ const StatisticScreen: FunctionComponent = () => {
               color: "#0D986A",
             }}
           >
-            PLANTSCAPE
+            FARM GURU
           </BigText>
         </Header>
         <SubContainer>
@@ -135,8 +170,53 @@ const StatisticScreen: FunctionComponent = () => {
             </TextButton>
           </Wrapper>
         </SubContainer>
+        <ScrollView>
+                {images2.map((image, index) => (
+                  <View
+                    key={index}
+                    style={{
+                      width: 345 * screenScale,
+                      height: 220 * screenScale,
+                      marginHorizontal: 15,
+                      borderRadius: 10,
+                      overflow: 'hidden',
+                      marginVertical: 5,
+                    }}
+                  >
+                    <Image
+                      source={image.source}
+                      style={{
+                        width: "100%",
+                        height: "80%",
+                        borderBottomLeftRadius: 10,
+                        borderBottomRightRadius: 10,
+
+                      }}
+                      
+                    />
+                    <Text
+                    // style={{
+                    //   textAlign: 'left',
+                    //   marginTop: 5,
+                    //   fontSize: 16, // Adjust as needed
+                    //   marginLeft: 10,
+                    // }}
+                    style={styles.historyInfoContent}
+                  >
+                    {image.title}
+                  </Text>
+                  </View>
+                ))}
+              </ScrollView> 
       </StatisticContainer>
     </SafeAreaView>
   );
 };
+const styles = StyleSheet.create({
+  historyInfoContent: {
+    color: Colors.BOLD_BUTTON, 
+    fontSize: 16 * screenScale, 
+    fontWeight: '500',
+  },
+});
 export default StatisticScreen;

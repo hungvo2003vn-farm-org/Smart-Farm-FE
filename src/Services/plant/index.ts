@@ -8,7 +8,7 @@ export interface Plant {
 
 const plantApi = API.injectEndpoints({
   endpoints: (build) => ({
-    getPlant: build.query<Plant, string>({
+    getPlant: build.query({
       query: () => `plant`,
     }),
   }),

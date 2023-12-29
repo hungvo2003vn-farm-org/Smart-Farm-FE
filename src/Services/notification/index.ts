@@ -11,7 +11,7 @@ export interface Notification {
 
 const notificationApi = API.injectEndpoints({
   endpoints: (build) => ({
-    getNotification: build.query<Notification[], string>({
+    getNotification: build.query({
       query: (id) => `notification/user/${id}`,
     }),
   }),

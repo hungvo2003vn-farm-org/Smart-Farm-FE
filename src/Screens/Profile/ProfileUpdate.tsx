@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import styled from "styled-components/native";
 
@@ -15,6 +15,8 @@ import { Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { RootScreens } from "..";
+import { useDispatch, useSelector } from "react-redux";
+import { editprofile } from "@/Store/reducers/profile";
 
 const ProfileUpdateScreenContainer = styled(Container)`
   justify-content: flex-start;
@@ -56,6 +58,20 @@ const Divider = styled.View`
 const ProfileUpdateScreen: FunctionComponent = () => {
   const navigaiton =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const profile = useSelector((state) => state.profile);
+  const [nameInput, setNameInput] = useState(profile.name);
+  const [emailInput, setEmailInput] = useState(profile.email); 
+  const dispatch = useDispatch();
+  const handleEmailChange = (text: string) => {
+    setEmailInput(text);
+  };
+  const handleNameChange = (text: string) => {
+    setNameInput(text);
+  };
+  const handleConfirm = () => {
+    dispatch(editprofile({ name: nameInput, email: emailInput}));
+    navigaiton.goBack();
+  };
   return (
     <SafeAreaView style={{ backgroundColor: "#F9F9F9", flex: 1 }}>
       <ProfileUpdateScreenContainer>
@@ -70,10 +86,10 @@ const ProfileUpdateScreen: FunctionComponent = () => {
         />
         <UserImageContainer source={userImage}></UserImageContainer>
         <RegularText textStyles={{ color: `${colors.black}`, fontSize: 20 }}>
-          Trần Văn A
+          {profile.name}
         </RegularText>
         <SubContainer>
-          <TextInput placeholder="Họ Tên" style={{ flexGrow: 1 }}></TextInput>
+          <TextInput placeholder="Họ Tên" style={{ flexGrow: 1 }} onChangeText={handleNameChange} value={nameInput}/>
         </SubContainer>
         <SubContainer>
           <Feather
@@ -86,14 +102,15 @@ const ProfileUpdateScreen: FunctionComponent = () => {
           <TextInput
             placeholder="Email"
             style={{ flexGrow: 1 }}
+            onChangeText={handleEmailChange} value={emailInput}
           ></TextInput>
         </SubContainer>
        
         <Wrapper>
           <RegularButton
-            onPress={() => {
-              navigaiton.goBack();
-            }}
+            onPress={
+              handleConfirm
+            }
             btnStyles={{ marginTop: 20, flexGrow: 1 }}
             textStyles={{ color: `${colors.white}`, fontSize: 20 }}
           >

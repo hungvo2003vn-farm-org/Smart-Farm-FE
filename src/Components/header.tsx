@@ -1,14 +1,34 @@
-import React from "react";
-import { ActivityIndicator, FlatList, SectionList, View, Text, StyleSheet, Image, Pressable, TouchableOpacity, Dimensions} from "react-native";
-import { FontAwesome5, AntDesign, Entypo, MaterialCommunityIcons, MaterialIcons, Ionicons} from "@expo/vector-icons";
+import React, { useState } from "react";
+import { ActivityIndicator, FlatList, SectionList, View, Text, StyleSheet, Image, Pressable, TouchableOpacity, Dimensions, Modal} from "react-native";
+import { FontAwesome5, AntDesign, Entypo, MaterialCommunityIcons, MaterialIcons, Ionicons, Feather} from "@expo/vector-icons";
 import {FontSize, Colors} from "@/Theme"
 import { RootScreens } from "../Screens/index";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/Navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteFarm } from "@/Store/reducers/farm";
 
 const HeaderDetail = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const dispatch = useDispatch();
+  const farmdata = useSelector((state) => state.farm.selectedFarm);
+  const [isConfirmationVisible, setConfirmationVisible] = useState(false); //Confirm delete UI
+  const handlePress = () => {
+    setConfirmationVisible(true);
+    console.log(setConfirmationVisible)
+  };
+  const handleConfirm = () => {
+    // Handle confirmation delete water schedule logic here
+    setConfirmationVisible(false);
+    dispatch(deleteFarm());
+    navigation.navigate(RootScreens.HOME);
+  };
+
+  const handleCancel = () => {
+    // Handle cancellation delete water schedule logic here
+    setConfirmationVisible(false);
+  };
   return (
     <View style={styles.header}>
       <View style={styles.headerBar}>
@@ -16,30 +36,52 @@ const HeaderDetail = () => {
           <Pressable onPress={() => navigation.navigate(RootScreens.HOME)}>
             <FontAwesome5 name='chevron-left' size={30} color='black' style={{marginLeft: 15}}/>
           </Pressable>
+          <TouchableOpacity style={styles.deleteBtn} onPress={handlePress}>
+              <Feather name="trash-2" size={30} color="black" />
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.intro}>
         <View style={{left: 25, marginBottom: 15, marginTop: 15,}}>
-          <Text style={styles.title}>Cây Xoài</Text>
+          <Text style={styles.title}>{farmdata.name}</Text>
         </View>
         <View style={styles.farmInfo}>
           <View>
-            <Text style={styles.normalText}>Ngày trồng: 22/08/2022</Text>
-            <Text style={styles.normalText}>Địa chỉ: Đồng Nai</Text>
+            <Text style={styles.normalText}>Ngày trồng: {farmdata.date}</Text>
+            <Text style={styles.normalText}>Địa chỉ: {farmdata.location}</Text>
           </View>
           <View>
-            <Text style={styles.normalText}>Loại cây: Xoài</Text>
-            <Text style={styles.normalText}>Diện tích: 2000 m2</Text>
+            <Text style={styles.normalText}>Loại cây: {farmdata.plant}</Text>
+            <Text style={styles.normalText}>Diện tích: {farmdata.acraege} m2</Text>
           </View>
         </View>
       </View>
       <View style={styles.avt}>
         <Image source={ require("../../assets/tree.png")} style={{height: 230, width: 230}}/>
       </View>
+      <Modal
+            transparent={true}
+            visible={isConfirmationVisible}
+            animationType="slide"
+          >
+            <View style={styles.confirmUI}>
+              <Text style={styles.confirmTitle}>Xóa nông trại này?</Text>
+              <View style={{
+                flexDirection: 'row', paddingHorizontal: 30,
+                justifyContent: 'space-between'
+              }}>
+                <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
+                  <Text style={styles.buttonText}>Xóa</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
+                  <Text style={styles.buttonText}>Hủy</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
     </View>
   )
 }
-
 const styles = StyleSheet.create({
   header: {
     height: '50%',
@@ -55,8 +97,9 @@ const styles = StyleSheet.create({
   },
 
   headerBarTitle: {
-      alignItems: 'center',
+      width: '100%',
       flexDirection: 'row',
+      justifyContent: 'space-between',
       position: 'absolute',
       top: 20,
   },
@@ -92,6 +135,42 @@ const styles = StyleSheet.create({
     width: '85%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  deleteBtn: {paddingLeft: 10, paddingBottom: 10, alignItems: 'flex-end', marginRight: 20
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  confirmButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    backgroundColor: '#416D50',
+  },
+  cancelButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    alignItems: 'center',
+    backgroundColor: '#B83535',
+  },
+  confirmTitle: {
+    color: Colors.BOLD_BUTTON,
+    fontSize: FontSize.TITLE,
+    fontWeight: '500',
+    marginBottom: 15,
+    marginTop: 15,
+    alignSelf: 'center',
+  },
+  confirmUI: {
+    top: '40%',
+    padding: 30,
+    backgroundColor: 'white',
+    marginHorizontal: 30,
+    borderRadius: 16
   },
 });
 

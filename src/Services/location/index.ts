@@ -1,6 +1,6 @@
 import { API } from "../base";
 
-export interface FarmLocation {
+export interface Location {
   id: number;
   name: string;
 }
@@ -8,7 +8,7 @@ export interface FarmLocation {
 
 const locationApi = API.injectEndpoints({
   endpoints: (build) => ({
-    getLocation: build.query<FarmLocation, string>({
+    getLocation: build.query<Location, string>({
       query: () => `location`,
     }),
   }),
