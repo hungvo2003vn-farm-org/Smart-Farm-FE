@@ -7,7 +7,7 @@ import { colors } from "../../Components/colors";
 import SmallText from "@/Components/texts/SmallText";
 import RegularText from "@/Components/texts/RegularText";
 import BigText from "@/Components/texts/BigText";
-import { Pressable, SafeAreaView } from "react-native";
+import { Pressable, SafeAreaView, View } from "react-native";
 import userImage from "../../../assets//bg/UserImage.png";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
@@ -82,6 +82,7 @@ const ProfileScreen: FunctionComponent = () => {
         </BigText>
         <Header>
           <UserImageContainer source={userImage} />
+          <View style={{ alignSelf: "center", marginRight: 10, width: '60%' }}>
           <RegularText
             textStyles={{
               color: `${colors.white}`,
@@ -91,11 +92,12 @@ const ProfileScreen: FunctionComponent = () => {
           >
             {profile.name}
           </RegularText>
+          </View>
           <FontAwesome
             name="pencil"
             size={28}
             color="white"
-            style={{ alignSelf: "center", marginLeft: 160 }}
+            style={{ alignSelf: "center", marginRight: 15 }}
             onPress={() => {
               navigation.navigate(RootScreens.UPDATEPROFILE);
             }}

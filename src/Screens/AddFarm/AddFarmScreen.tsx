@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "@/Navigation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { SafeAreaView, TextInput } from "react-native";
+import {SelectList}from 'react-native-dropdown-select-list-expo'
 import BigText from "@/Components/texts/BigText";
 import { colors } from "@/Components/colors";
 import RegularButton from "@/Components/button/RegularButton";
@@ -14,15 +15,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { TreeItemProps } from "@/Components/item/types";
 import {Picker} from '@react-native-picker/picker';
 import { addFarm, updateInputAcraege, updateInputFarmName, updateInputLocation, updateInputPlant } from "@/Store/reducers/farm";
+import { border } from "native-base/lib/typescript/theme/styled-system";
 
 const SubContainer = styled.View`
   height: 60px;
   background-color: ${colors.white};
   margin-horizontal: 10px;
-  
   border-radius: 10px;
   margin-vertical: 17px;
 `;
+const location = [
+  {key:'Tp. Hồ Chí Minh', value:'Tp. Hồ Chí Minh'},
+  {key:'Đồng Tháp', value:'Đồng Tháp'},
+]
+const plant = [
+  {key:'Cây xoài', value:'Cây xoài'},
+  {key:'Cây cam', value:'Cây cam'},
+]
 const AddFarmScreen: FunctionComponent = () => {
     const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -46,7 +55,8 @@ const AddFarmScreen: FunctionComponent = () => {
     // const [area, setArea] = useState('');
     // const [name, setName] = useState('');
 
-
+    const [selectedLocation, setSelectedLocation] = React.useState("");
+    const [selectedPlant, setSelectedPlant] = React.useState("");
     const inputFarmName = useSelector((state) => state.farm.inputFarmName);
     const inputPlant = useSelector((state) => state.farm.inputPlant);
     const inputLocation = useSelector((state) => state.farm.inputLocation);
@@ -83,10 +93,13 @@ const AddFarmScreen: FunctionComponent = () => {
           THÔNG TIN NÔNG TRẠI
         </BigText>
       </SubContainer>
-      <SubContainer style={{marginTop:30}}>
+      <SubContainer style={{
+        marginTop:30, 
+        // borderWidth: 0.5, borderColor: colors.black, borderStyle: 'solid'
+        }}>
           <TextInput
             placeholder="Tên nông trại"
-            style={{ flexGrow: 1 , padding:10}}
+            style={{ flexGrow: 1 , padding:10, marginLeft: 10}}
             value={inputFarmName}
             onChangeText= {handleFarmNameChange}
           ></TextInput>
@@ -97,8 +110,8 @@ const AddFarmScreen: FunctionComponent = () => {
             style={{ flexGrow: 1 , padding:10}}
           ></TextInput>
           <MaterialIcons name="keyboard-arrow-down" size={24} color="black" /> */}
-          <SubContainer>
-          <Picker
+          {/* <SubContainer> */}
+          {/* <Picker
             selectedValue={inputLocation}
             onValueChange={(itemValue, itemIndex) =>(handleLocationChange(itemValue))}
             // style={{backgroundColor: colors.white, height: 60, marginVertical: 17, padding: 10, marginHorizontal: 10, borderRadius: 20}}
@@ -106,9 +119,10 @@ const AddFarmScreen: FunctionComponent = () => {
             >
             <Picker.Item label="Tp.Hồ Chí Minh"  value="Tp.Hồ Chí Minh" />
             <Picker.Item label="Đồng Tháp" value="Đồng Tháp" />
-          </Picker>
-        </SubContainer>
-        <SubContainer>
+          </Picker> */}
+            <SelectList placeholder="Chọn tỉnh/thành phố" searchPlaceholder= "Tìm kiếm" setSelected={(val) => setSelectedLocation(val)} onSelect={() =>handleLocationChange(selectedLocation)} boxStyles={{height: 60, marginHorizontal: 10, marginVertical: 17, backgroundColor:  colors.white, borderWidth:0}} inputStyles= {{alignSelf: 'center'}} data={location}  />
+        {/* </SubContainer> */}
+        {/* <SubContainer>
           <Picker
             selectedValue={inputPlant}
             // selectedValue={inputPlant}
@@ -119,7 +133,8 @@ const AddFarmScreen: FunctionComponent = () => {
             <Picker.Item label="Cây cam" value="Cây cam" />
             <Picker.Item label="Cây xoài"  value="Cây xoài" />
           </Picker>
-        </SubContainer>
+        </SubContainer> */}
+        <SelectList placeholder="Chọn loại cây" searchPlaceholder= "Tìm kiếm" setSelected={(val) => setSelectedPlant(val)} onSelect={() =>handlePlantChange(selectedPlant)} boxStyles={{height: 60, marginHorizontal: 10, marginVertical: 17, backgroundColor:  colors.white, borderWidth:0}} inputStyles= {{alignSelf: 'center'}} data={plant}  />
         <SubContainer>
           <TextInput
             placeholder="Diện tích"
