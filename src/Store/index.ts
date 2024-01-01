@@ -16,13 +16,15 @@ import { homeReducers, themeReducers } from "./reducers";
 import { WEATHER_API } from "@/Services/weather/base";
 import { farmReducers} from "./reducers/farm";
 import { profileReducers } from "./reducers/profile";
-
+// import {authReducer} from './reducers/auth';
 const reducers = combineReducers({
   //api: API.reducer,
   //api: WEATHER_API.reducer,
   farm: farmReducers,
   profile: profileReducers,
   [WEATHER_API.reducerPath]: WEATHER_API.reducer,
+  [API.reducerPath]: API.reducer
+  // auth: authReducer,
 });
 
 const persistConfig = {

@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "@/Navigation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { SafeAreaView, TextInput } from "react-native";
-import {SelectList}from 'react-native-dropdown-select-list-expo'
+import {SelectList} from 'react-native-dropdown-select-list-expo'
 import BigText from "@/Components/texts/BigText";
 import { colors } from "@/Components/colors";
 import RegularButton from "@/Components/button/RegularButton";

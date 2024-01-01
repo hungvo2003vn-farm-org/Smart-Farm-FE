@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import styled from "styled-components/native";
 
@@ -17,6 +17,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootScreens } from "@/Screens";
 import { AntDesign } from '@expo/vector-icons';
 import { ScrollView } from "native-base";
+import { useRegisterUserMutation } from "@/Services/auth";
 const RegisterLoginContainer = styled.View`
   width: 100%;
   height: 100%;
@@ -58,38 +59,75 @@ const InputDivContainer = styled.View`
 const RegisterScreen03: FunctionComponent = () => {
   const navigaiton =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const [signup, signUpResult] = useRegisterUserMutation();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleSignUp = async () => {
+    try {
+      console.log(username, password)
+      const response = await signup({email, username, password}).unwrap()
+
+      console.log(response);
+      if (response) {
+        // Navigate to the home page
+        navigaiton.navigate(RootScreens.REGISTER4);
+      } else {
+        // Handle login error
+        console.error('Signup failed');
+        
+      }
+    } catch (err) {
+      // Handle any other errors
+      console.error('An error occurred:', err);
+    }
+  };
+  
   return (
+    
     <RegisterLoginContainer>
       <BackgroundImage source={bg}>
         <SubContainer>
           <LogoContainer source={logo}></LogoContainer>
-          <View style={{ marginBottom: 90, alignItems: "center" }}>
+          <View style={{ marginBottom: 50, alignItems: "center" }}>
             <BigText textStyles={{ color: colors.white, fontWeight: "600" }}>
-              Bắt đầu với SMART
+              FARM GURU
             </BigText>
           </View>
           <InputDivContainer>
             <AntDesign name="mail" size={24} color="black"  style={{marginHorizontal:10}}/>
-            <TextInput placeholder="Email" style={{ flexGrow: 1 , padding:10}}></TextInput>
+            <TextInput placeholder="Email" 
+            value={email}
+            onChangeText={(value)=>{setEmail(value)}}
+            style={{ flexGrow: 1 , padding:10}}></TextInput>
           </InputDivContainer>
           <InputDivContainer>
             <AntDesign name="user" size={24} color="black"  style={{marginHorizontal:10}}/>
-            <TextInput placeholder="Tên đăng nhập" style={{ flexGrow: 1 , padding:10}}></TextInput>
+            <TextInput placeholder="Tên đăng nhập" 
+            value={username}
+            onChangeText={(value)=>{setUsername(value)}}
+            style={{ flexGrow: 1 , padding:10}}></TextInput>
           </InputDivContainer>
           <InputDivContainer>
             <AntDesign name="lock" size={24} color="black" style={{marginHorizontal:10}} />
-            <TextInput secureTextEntry={true} placeholder="Mật khẩu" style={{ flexGrow: 1 , padding:10}}></TextInput>
+            <TextInput secureTextEntry={true} placeholder="Mật khẩu" 
+            value={password}
+            onChangeText={(value)=>{setPassword(value)}}
+            style={{ flexGrow: 1 , padding:10}}></TextInput>
           </InputDivContainer>
           <InputDivContainer>
             <AntDesign name="lock" size={24} color="black" style={{marginHorizontal:10}} />
-            <TextInput secureTextEntry={true} placeholder="Xác nhận lại mật khẩu" style={{ flexGrow: 1 , padding:10}}></TextInput>
+            <TextInput secureTextEntry={true} 
+            value={repassword}
+            onChangeText={(value)=>{setRepassword(value)}}
+            placeholder="Xác nhận lại mật khẩu" style={{ flexGrow: 1 , padding:10}}></TextInput>
           </InputDivContainer>
           <View style={{width:'100%', paddingHorizontal:50, marginTop: 30}}>
             <RegularButton
               btnStyles={{ marginTop: 10 }}
-              onPress={() => {
-                navigaiton.navigate(RootScreens.REGISTER4);
-              }}
+              onPress={handleSignUp}
             >
               <RegularText
                 textStyles={{

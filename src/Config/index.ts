@@ -1,9 +1,15 @@
 const WEATHER_API_KEY = 'c724fc349fc740958c1155602230611';
 import { v4 } from "uuid";
 export const Config = {
-  API_URL: "https://jsonplaceholder.typicode.com/",
+  API_URL: "http://hpcc.hcmut.edu.vn:23003/",
   WEATHER_API_URL: "https://api.weatherapi.com/v1/forecast.json?key=c724fc349fc740958c1155602230611&lang=vi&days=7&q=",
 };
+// export const AUTH_LOGGING_IN = '[AUTH] LOGGING_IN';
+// export const AUTH_LOGGING_OUT = '[AUTH] AUTH_LOGGING_OUT';
+// export const AUTH_LOGGED_IN = '[AUTH] LOGGED_IN';
+// export const AUTH_ERR_LOG_IN = '[AUTH] ERR_LOG_IN';
+// export const AUTH_ERR_LOG_OUT = '[AUTH] AUTH_ERR_LOG_OUT';
+// export const AUTH_LOGOUT = '[AUTH] LOGOUT';
 export const FarmListJson = [{
   id: v4(),
   name: 'Cây xoài Đồng Tháp',

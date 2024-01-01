@@ -13,7 +13,7 @@ export type WeatherScreenNavigatorProps = NativeStackScreenProps<
 
 export const WeatherContainer = ({navigation}:WeatherScreenNavigatorProps) => {
   const onNavigate = (screen: RootScreens) => {
-    navigation.navigate(screen);
+    navigation.replace(screen);
   };
   const [weather, setWeather] = useState("Ho%20Chi%20Minh");
 

@@ -36,7 +36,7 @@
       "package": "com.hpcc.expo_redux_template"
     },
     "web": {
-      "favicon":  "./assets/bg/logo.png"
+      "favicon": "./assets/bg/logo.png"
     },
     "runtimeVersion": {
       "policy": "sdkVersion"
@@ -44,7 +44,7 @@
     "plugins": [],
     "extra": {
       "eas": {
-        "projectId": "fa936a9f-d1d8-4028-a654-014dac64f9d7"
+        "projectId": "cd61b4a1-aba4-482d-be3f-970ebd59bc88"
       }
     }
   }

@@ -33,8 +33,8 @@ export interface IWeatherProps {
 
 export const Weather = (props: IWeatherProps) => {
   const { data, onNavigate, isSuccess } = props;
-  var dataState = useSelector((state) => state.apiweather.data);
-  console.log(dataState);
+  // var dataState = useSelector((state) => state.apiweather.data);
+  // console.log(dataState);
   var moment = require('moment'); // require
   // moment().format(); 
 

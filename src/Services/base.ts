@@ -5,8 +5,17 @@ import {
   FetchArgs,
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
-
-const baseQuery = fetchBaseQuery({ baseUrl: Config.API_URL});
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const token = AsyncStorage.getItem('token');
+const baseQuery = fetchBaseQuery({ 
+  baseUrl: Config.API_URL,
+  prepareHeaders: (headers, { getState }) => {
+    if (token) {
+        headers.set('Authorization', `Bearer ${token}`)
+    }
+    return headers;
+}
+});
 
 const baseQueryWithInterceptor = async (
   args: string | FetchArgs,
@@ -21,6 +30,7 @@ const baseQueryWithInterceptor = async (
 };
 
 export const API = createApi({
+  reducerPath: 'api',
   baseQuery: baseQueryWithInterceptor,
   endpoints: () => ({}),
 });

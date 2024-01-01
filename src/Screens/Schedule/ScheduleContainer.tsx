@@ -14,7 +14,7 @@ export type ScheduleScreenNavigatorProps = NativeStackScreenProps<
 export const ScheduleContainer = ({navigation}:ScheduleScreenNavigatorProps) => {
   
   const onNavigate = (screen: RootScreens) => {
-    navigation.navigate(screen);
+    navigation.replace(screen);
   };
 
 

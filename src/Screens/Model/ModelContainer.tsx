@@ -13,7 +13,7 @@ export type ModelScreenNavigatorProps = NativeStackScreenProps<
 export const ModelContainer = ({navigation}:ModelScreenNavigatorProps) => {
   
   const onNavigate = (screen: RootScreens) => {
-    navigation.navigate(screen);
+    navigation.replace(screen);
   };
 
 

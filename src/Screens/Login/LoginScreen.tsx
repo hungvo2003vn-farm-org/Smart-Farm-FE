@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import styled from "styled-components/native";
 
@@ -17,6 +17,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/Navigation";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from "react-redux";
+import { useLoginUserMutation } from "@/Services/auth";
 const LoginScreenContainer = styled(Container)`
   width: 100%;
   height: 100%;
@@ -61,9 +64,46 @@ const InputContainer = styled.TextInput`
   height: 100%;
   background-color: ${colors.black};
 `;
-const LoginScreen: FunctionComponent = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+const LoginScreen= (props: {
+  onNavigate: (string: RootScreens) => void;
+  navigation: any;
+  }) => {
+  // const navigation =
+  //   useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    const [authLogin, authLoginResult] = useLoginUserMutation();
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const dispatch = useDispatch();
+    const handleLogin = async () => {
+      try {
+        console.log(username, password)
+        const response = await authLogin({username, password}).unwrap()
+
+        console.log(response);
+        if (response) {
+          // Store the JWT in AsyncStorage
+          AsyncStorage.setItem('token', response.token);
+          console.log(response.user)
+          AsyncStorage.setItem('user', JSON.stringify(response.user));
+          // Navigate to the home page
+          props.navigation.reset({
+            index: 0,
+            routes: [
+              {
+                name:RootScreens.HOME,
+              },
+            ],
+          });
+        } else {
+          // Handle login error
+          console.error('Login failed');
+          
+        }
+      } catch (err) {
+        // Handle any other errors
+        console.error('An error occurred:', err);
+      }
+    };
   return (
     <>
       <LoginScreenContainer style={{}}>
@@ -79,6 +119,8 @@ const LoginScreen: FunctionComponent = () => {
               />
               <TextInput
                 style={{ textAlign: "justify", flexGrow: 1 }}
+                value={username}
+                onChangeText={(value)=>{setUsername(value)}}
                 placeholder="Tên đăng nhập"
               ></TextInput>
             </InputDivContainer>
@@ -92,14 +134,14 @@ const LoginScreen: FunctionComponent = () => {
               <TextInput
                 secureTextEntry={true}
                 placeholder="Mật khẩu"
+                value={password}
+                onChangeText={(value)=>{setPassword(value)}}
                 style={{ flexGrow: 1 }}
               ></TextInput>
             </InputDivContainer>
             <View style={{ flexDirection: "row", paddingHorizontal: 10 }}>
               <RegularButton
-                onPress={() => {
-                  navigation.navigate(RootScreens.HOME);
-                }}
+                onPress={handleLogin}
                 btnStyles={{ marginTop: 20 }}
                 textStyles={{ color: `${colors.white}`, fontSize: 20 }}
               >
@@ -111,7 +153,7 @@ const LoginScreen: FunctionComponent = () => {
                 <RegularText textStyles={{color:colors.primary}}>Đăng nhập bằng điện thoại</RegularText>
               </Pressable> */}
               {/* <RegularText textStyles={{color:colors.primary}}>|</RegularText> */}
-              <Pressable style={{ marginHorizontal: 5 }} onPress={()=>{navigation.navigate(RootScreens.REGISTER3)}}>
+              <Pressable style={{ marginHorizontal: 5 }} onPress={()=>{props.onNavigate(RootScreens.REGISTER3)}}>
                 <RegularText textStyles={{color:colors.primary}}>Đăng kí</RegularText>
               </Pressable>
             </View>

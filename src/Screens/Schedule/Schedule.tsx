@@ -55,6 +55,7 @@ export const Schedule = (props: {
 }) => {
   const scenario = [
     {
+      farmId: '1',
       sche: [
         {
           waterHour: '07:00',
@@ -67,7 +68,23 @@ export const Schedule = (props: {
           water: '700',
         }
       ]
-    }
+    },
+    {
+      farmId: '2',
+      sche: [
+        {
+          waterHour: '07:00',
+          waterTime: '10:00',
+          water: '500',
+        },
+        {
+          waterHour: '08:00',
+          waterTime: '12:00',
+          water: '700',
+        }
+      ]
+    },
+
   ]
   var data = useSelector((state) => state.farm.selectedFarm.sche);
   const [isConfirmationVisible, setConfirmationVisible] = useState(false); //Confirm delete UI

@@ -19,6 +19,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/Navigation";
 import { RootScreens } from "..";
 import { useSelector } from "react-redux";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const ProfileScreenContainer = styled(Container)`
   width: 100%;
   flex: 1;
@@ -61,8 +62,14 @@ const Circle = styled.View`
 const ProfileScreen: FunctionComponent = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const profile = useSelector((state) => state.profile);
-  console.log(profile);
+    const user = AsyncStorage.getItem('user');
+  const handleLogout = async () => {
+    // Remove the JWT from AsyncStorage
+    await AsyncStorage.removeItem('token');
+    // Navigate to the login page
+    navigation.navigate(RootScreens.LOGIN);
+  };
+  console.log(JSON.parse(user.toString()));
   return (
     <SafeAreaView
       style={{ flex: 1, width: "100%", backgroundColor: "#F9F9F9" }}
@@ -90,7 +97,7 @@ const ProfileScreen: FunctionComponent = () => {
               fontSize: 20,
             }}
           >
-            {profile.name}
+            {user.username}
           </RegularText>
           </View>
           <FontAwesome
@@ -161,7 +168,7 @@ const ProfileScreen: FunctionComponent = () => {
               width: "30%",
             }}
           >
-            <Pressable onPress={()=>{navigation.navigate(RootScreens.LOGIN)}}>
+            <Pressable onPress={handleLogout}>
             <RegularText>Đăng xuất</RegularText>
             </Pressable>
           </Wrapper>
