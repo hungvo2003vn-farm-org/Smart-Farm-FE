@@ -16,7 +16,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { RootScreens } from "..";
 import { useDispatch, useSelector } from "react-redux";
-import { editprofile } from "@/Store/reducers/profile";
+// import { editprofile } from "@/Store/reducers/profile";
+import { useGetUserQuery, useUpdateUserMutation } from "@/Services";
 
 const ProfileUpdateScreenContainer = styled(Container)`
   justify-content: flex-start;
@@ -58,19 +59,38 @@ const Divider = styled.View`
 const ProfileUpdateScreen: FunctionComponent = () => {
   const navigaiton =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const profile = useSelector((state) => state.profile);
-  const [nameInput, setNameInput] = useState(profile.name);
-  const [emailInput, setEmailInput] = useState(profile.email); 
-  const dispatch = useDispatch();
+    const [updateProfile, resultUpdate] = useUpdateUserMutation();
+    const userId = useSelector((state) => state.profile.id);
+    const apiMain = useSelector((state) => state.apiMain);
+    const result= useGetUserQuery(userId);
+    console.log('userId',userId);
+    const firstName = result.data.firstName? result.data.firstName: '';
+    const lastName = result.data.lastName? result.data.lastName: '';
+    const email = result.data.email? result.data.email: '';
+  // const profile = useSelector((state) => state.profile);
+  console.log('apiMain',apiMain)
+  const [fnameInput, setFNameInput] = useState(firstName);
+  const [lnameInput, setLNameInput] = useState(lastName);
+  const [emailInput, setEmailInput] = useState(email); 
+
   const handleEmailChange = (text: string) => {
     setEmailInput(text);
   };
-  const handleNameChange = (text: string) => {
-    setNameInput(text);
+  const handleLNameChange = (text: string) => {
+    setLNameInput(text);
   };
-  const handleConfirm = () => {
-    dispatch(editprofile({ name: nameInput, email: emailInput}));
+  const handleFNameChange = (text: string) => {
+    setFNameInput(text);
+  };
+  console.log()
+  const handleConfirm = async() => {
+    try {
+      const response = await updateProfile({userId, fnameInput, lnameInput, emailInput}).unwrap()
     navigaiton.goBack();
+    } catch (error){
+      console.error('Login failed');
+          
+    }
   };
   return (
     <SafeAreaView style={{ backgroundColor: "#F9F9F9", flex: 1 }}>
@@ -86,10 +106,13 @@ const ProfileUpdateScreen: FunctionComponent = () => {
         />
         <UserImageContainer source={userImage}></UserImageContainer>
         <RegularText textStyles={{ color: `${colors.black}`, fontSize: 20 }}>
-          {profile.name}
+          {firstName+ ' ' + lastName}
         </RegularText>
         <SubContainer>
-          <TextInput placeholder="Họ Tên" style={{ flexGrow: 1 }} onChangeText={handleNameChange} value={nameInput}/>
+          <TextInput placeholder="Họ" style={{ flexGrow: 1 }} onChangeText={handleFNameChange} value={fnameInput}/>
+        </SubContainer>
+        <SubContainer>
+          <TextInput placeholder="Tên" style={{ flexGrow: 1 }} onChangeText={handleLNameChange} value={lnameInput}/>
         </SubContainer>
         <SubContainer>
           <Feather

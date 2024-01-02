@@ -1,5 +1,6 @@
 // export * from "./base";
-// export * from "./users";
+export * from "./auth";
+export * from "./users";
 export * from "./weather";
 export * from "./farm";
 export * from "./location";

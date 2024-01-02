@@ -37,3 +37,34 @@ export const FarmListJson = [{
     }
   ],
 }];
+
+export const scenario = [
+    {
+      sche: [
+        {
+          waterHour: '07:00',
+          waterTime: '10:00',
+          water: '500',
+        },
+        {
+          waterHour: '08:00',
+          waterTime: '12:00',
+          water: '700',
+        }
+      ]
+    },
+    {
+      sche: [
+        {
+          waterHour: '07:00',
+          waterTime: '10:00',
+          water: '500',
+        },
+        {
+          waterHour: '08:00',
+          waterTime: '12:00',
+          water: '700',
+        }
+      ]
+    },
+  ]

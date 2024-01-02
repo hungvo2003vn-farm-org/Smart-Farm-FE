@@ -18,7 +18,7 @@ export interface Farm {
 const farmApi = API.injectEndpoints({
   endpoints: (build) => ({
     getFarmList: build.query({
-      query: (id) => `farm/user/${id}`,
+      query: () => `farms`,
     }),
     getFarm: build.query({
       query: (id) => `farm/${id}/`,
@@ -41,4 +41,4 @@ const farmApi = API.injectEndpoints({
 });
 
 
-export const { useLazyGetFarmListQuery, useLazyGetFarmQuery, useCreateFarmMutation, useDeleteFarmMutation  } = farmApi;
+export const { useGetFarmListQuery, useLazyGetFarmQuery, useCreateFarmMutation, useDeleteFarmMutation  } = farmApi;

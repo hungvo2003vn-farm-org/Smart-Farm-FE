@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import styled from "styled-components/native";
 
@@ -19,7 +19,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/Navigation";
 import { RootScreens } from "..";
 import { useSelector } from "react-redux";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { useGetUserQuery } from "@/Services";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const ProfileScreenContainer = styled(Container)`
   width: 100%;
   flex: 1;
@@ -59,17 +61,57 @@ const Circle = styled.View`
   justify-content: center;
   align-items: center;
 `;
-const ProfileScreen: FunctionComponent = () => {
+const ProfileScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const user = AsyncStorage.getItem('user');
+    const userId = useSelector((state) => state.profile.id);
+    const result= useGetUserQuery(userId);
+    console.log('userId',userId);
+    // const firstName = result.data.firstName? result.data.firstName: '';
+    // const lastName = result.data.lastName? result.data.lastName: '';
+    console.log('lastName',result);
+    // useEffect(() => {
+    //   fetchOne(props.data);
+    //   console.log("data", props.data);
+    //   console.log(result);
+    //   // fetchOne(user.id);
+    //   // console.log('user', user);
+    //   // console.log(result);
+      
+    //   // dispatch(editprofile({ name: data.firstName + ' ' +data.lastName, email: data.email}));
+    // }, [fetchOne]);
+    // const [result] = useLazyGetUserQuery();
+    // const [user, setUser] = useState({});
+    // const [dataState, setDataState] = useState(props.data);
+
+    // const handleFetchOne = async () =>{
+    //   await AsyncStorage.getItem("user").then((value) => {setUser(JSON.parse(value)) });
+    //   console.log(user.id);
+    //   await fetchOne(user.id);
+    // }
+    // useEffect(() => {
+    //   console.log('user',user);
+    //   handleFetchOne();
+    //   console.log(result);
+      
+    //   // dispatch(editprofile({ name: data.firstName + ' ' +data.lastName, email: data.email}));
+    // }, [result]);
+    // console.log(props.data)
   const handleLogout = async () => {
     // Remove the JWT from AsyncStorage
     await AsyncStorage.removeItem('token');
+    // await AsyncStorage.removeItem('user');
     // Navigate to the login page
-    navigation.navigate(RootScreens.LOGIN);
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name:RootScreens.LOGIN,
+        },
+      ],
+    });
   };
-  console.log(JSON.parse(user.toString()));
+
   return (
     <SafeAreaView
       style={{ flex: 1, width: "100%", backgroundColor: "#F9F9F9" }}
@@ -97,7 +139,7 @@ const ProfileScreen: FunctionComponent = () => {
               fontSize: 20,
             }}
           >
-            {user.username}
+            {result.isSuccess? (result.data.firstName? result.data.firstName: '' + ' ' + result.data.lastName? result.data.lastName: ''): ''}
           </RegularText>
           </View>
           <FontAwesome

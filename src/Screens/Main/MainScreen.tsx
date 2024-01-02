@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import styled from "styled-components/native";
 
@@ -21,6 +21,7 @@ import { RootStackParamList } from "@/Navigation";
 import { RootScreens } from "..";
 import { useSelector } from "react-redux";
 import { View } from "react-native";
+import { useGetFarmListQuery, useLazyGetFarmListQuery, useLazyGetFarmQuery } from "@/Services";
 const MainScreenContainer = styled.View`
   background-color: ${colors.white};
   flex: 1;
@@ -53,9 +54,21 @@ const ItemContainer = styled.ScrollView`
   flex-direction: column;
   overflow-y: scroll;
 `;
-const MainScreen: FunctionComponent = () => {
+const MainScreen= (
+  // props:{data: any}
+  ) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const data = useSelector((state) => state.farm.farmlist);
+  // const data = useSelector((state) => state.farm.farmlist);
+  const result =
+  useGetFarmListQuery();
+  // const handleFetchOne = async () =>{
+  //   await fetchOne();
+  // }
+  // useEffect(() => {
+  //   handleFetchOne();
+  //   console.log("result",result);
+  // }, [fetchOne,result]);
+
   return (
     <SafeAreaView
       style={{
@@ -96,17 +109,21 @@ const MainScreen: FunctionComponent = () => {
               Thêm nông trại
             </RegularText>
         </Pressable>
+        {result.isSuccess?
         <ItemContainer>
-            {data.map((item, index) => {
-              console.log(item);
+            {result.currentData.map((item, index) => {
             return (
             <View key={index}>
               {/* <TreeItem {...item.id} {...item.name} {...item.model} {...item.timeOn}></TreeItem> */}
-              <TreeItem id = {item.id} name = {item.name} model= {item.model} timeOn={item.timeOn}></TreeItem>
+              <TreeItem id = {item.id} name = {item.name? item.name: ''} model= {item.model? item.model: ''} 
+              // timeOn={item.timeOn}
+              ></TreeItem>
               </View>
               )}
             )}
-            </ItemContainer>
+          </ItemContainer>
+          : <View> Đang cập nhật</View>
+        } 
       </MainScreenContainer>
     </SafeAreaView>
   );

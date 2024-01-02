@@ -84,7 +84,6 @@ export const Schedule = (props: {
         }
       ]
     },
-
   ]
   var data = useSelector((state) => state.farm.selectedFarm.sche);
   const [isConfirmationVisible, setConfirmationVisible] = useState(false); //Confirm delete UI

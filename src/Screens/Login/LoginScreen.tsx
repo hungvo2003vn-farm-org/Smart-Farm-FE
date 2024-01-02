@@ -18,8 +18,9 @@ import { RootStackParamList } from "@/Navigation";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLoginUserMutation } from "@/Services/auth";
+import { addUser } from "@/Store/reducers/profile";
 const LoginScreenContainer = styled(Container)`
   width: 100%;
   height: 100%;
@@ -73,18 +74,22 @@ const LoginScreen= (props: {
     const [authLogin, authLoginResult] = useLoginUserMutation();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const user = useSelector((state) => state.profile);
     const dispatch = useDispatch();
     const handleLogin = async () => {
       try {
         console.log(username, password)
         const response = await authLogin({username, password}).unwrap()
-
-        console.log(response);
         if (response) {
           // Store the JWT in AsyncStorage
-          AsyncStorage.setItem('token', response.token);
-          console.log(response.user)
-          AsyncStorage.setItem('user', JSON.stringify(response.user));
+          await AsyncStorage.setItem('token', response.token);
+          
+          // await AsyncStorage.setItem('user', JSON.stringify(response.user));
+          dispatch(addUser({
+            token: response.token,
+            id: response.user.id, 
+            username: response.user.username, 
+            useremail: response.user.email}));
           // Navigate to the home page
           props.navigation.reset({
             index: 0,
@@ -164,3 +169,5 @@ const LoginScreen= (props: {
   );
 };
 export default LoginScreen;
+
+

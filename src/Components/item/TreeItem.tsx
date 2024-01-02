@@ -52,9 +52,9 @@ const TreeItem: FunctionComponent = ({id, name, model, timeOn}) => {
           <RegularText textStyles={{ fontWeight: "200" }}>
             {"Mô hình : " + model.name}
           </RegularText>
-          <RegularText textStyles={{ fontWeight: "200" }}>
+          {/* <RegularText textStyles={{ fontWeight: "200" }}>
             {"Thời điểm tưới tiếp theo : " + timeOn}
-          </RegularText>
+          </RegularText> */}
         </DetailContainer>
       </ItemContainer>
     </Pressable>

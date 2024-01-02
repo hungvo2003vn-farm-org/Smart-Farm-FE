@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API } from "../base";
 
 export interface User {
@@ -6,17 +7,20 @@ export interface User {
   name: string;
 }
 
-
 const userApi = API.injectEndpoints({
   endpoints: (build) => ({
     getUser: build.query({
-      query: (id) => `users/${id}`,
+      query: (id) =>  `users/${id}`,
     }),
     updateUser: build.mutation({
-      query: ({id,name, email}) => ({
+      query: ({id, fname, lname, email}) => ({
         url: `users/${id}`,
-        method: 'POST',
-        body: { name, email},
+        method: 'PATCH',
+        body: { 
+          'firstName': fname, 
+          'lastName': lname,
+          'email': email,
+        },
       }),
     })
   }),
@@ -24,4 +28,4 @@ const userApi = API.injectEndpoints({
 });
 
 
-export const { useLazyGetUserQuery, useUpdateUserMutation } = userApi;
+export const { useGetUserQuery, useUpdateUserMutation } = userApi;
