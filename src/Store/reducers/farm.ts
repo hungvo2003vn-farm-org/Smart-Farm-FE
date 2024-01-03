@@ -1,15 +1,19 @@
 import { FarmListJson } from "@/Config";
+import { Farm } from "@/Services";
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 } from "uuid";
+
 const farmSlice = createSlice({
   name: "farmlist",
   initialState: { 
-    farmlist: FarmListJson,
+    farmlist: new Array<Farm>,
     inputFarmName: "",
     inputPlant: "",
     inputLocation: "",
     inputAcraege: "",
-    selectedFarm: FarmListJson[0],
+    selectedFarm: {
+      
+    },
     curSchedule:{
       id: "",
       waterHour: '',

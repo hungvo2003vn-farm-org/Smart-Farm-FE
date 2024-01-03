@@ -20,7 +20,7 @@ import { profileReducers } from "./reducers/profile";
 const reducers = combineReducers({
   //api: API.reducer,
   //api: WEATHER_API.reducer,
-  farm: farmReducers,
+  // farm: farmReducers,
   profile: profileReducers,
   [WEATHER_API.reducerPath]: WEATHER_API.reducer,
   [API.reducerPath]: API.reducer
@@ -41,7 +41,9 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat( API.middleware, WEATHER_API.middleware);
+    }).concat( API.middleware,
+      WEATHER_API.middleware
+      );
 
     // if (__DEV__ && !process.env.JEST_WORKER_ID) {
     //   const createDebugger = require("redux-flipper").default;

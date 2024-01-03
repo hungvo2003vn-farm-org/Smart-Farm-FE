@@ -1,10 +1,26 @@
-{
-  "extends": "expo/tsconfig.base",
+// {
+//   "extends": "expo/tsconfig.base",
+//   "compilerOptions": {
+//     "strict": true,
+//     "baseUrl": ".",
+//     "paths": {
+//       "@/*": ["src/*"]
+//     }
+//   }
+// }
+{ "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    }
-  }
+      "@/*": ["src/*"]},
+    "target": "es6",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "strict": true,
+    "jsx": "react-native",
+    "allowJs": true,
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.png", "src/**/*.jpg", "src/**/*.jpeg", "src/**/*.gif", "src/**/*.svg"],
+  "exclude": ["node_modules"]
+   
 }

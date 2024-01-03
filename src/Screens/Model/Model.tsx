@@ -20,23 +20,24 @@ export interface ModelProps {
 
 export const Model= (props: {
     onNavigate: (string: RootScreens) => void;
+    farmId: any;
   }) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     // const [modelstatus, setModelStatus] = useState(1);
     const [isConfirmationVisible, setConfirmationVisible] = useState(false); //Confirm delete UI
-    const activeModelId = useSelector((state) => state.farm.selectedFarm.model.id);
+    // const activeModelId = useSelector((state) => state.farm.selectedFarm.model.id);
     const [curModelId, setCurModelId] = useState(0); //
     
     //Handle delete water schdule
-    const handlePress = (id: any)  => {
+    const handlePress = ()  => {
       setConfirmationVisible(true);
-      setCurModelId(id);
+      // setCurModelId(id);
     };
   
     const handleConfirm= () => {
       // Handle confirmation delete water schedule logic here
       setConfirmationVisible(false);
-      dispatch(updateModel({id: data[curModelId-1].id, name: data[curModelId-1].name}));
+      // dispatch(updateModel({id: data[curModelId-1].id, name: data[curModelId-1].name}));
     };
   
     const handleCancel = () => {
@@ -115,11 +116,11 @@ export const Model= (props: {
           <ScrollView style={styles.scrollView}>
           {data.map((item, index) => {
             return (
-              <Pressable  key={index}  onPress={()=>{handlePress(item.id);}}>
+              <Pressable  key={index}  onPress={()=>{handlePress();}}>
               <View style={{ flexDirection: 'row' }}>
-                {
+                {/* {
                 item.id == activeModelId? 
-                  (
+                  ( */}
                     <View style={styles.dataItemActive}>
                       <Text >
                         Mô hình {item.name}
@@ -131,7 +132,7 @@ export const Model= (props: {
                         Mô tả: {item.des}
                       </Text>
                     </View>
-                  ):(
+                  {/* ):( */}
                     <View style={styles.dataItemInactive}>
                     <Text >
                       Mô hình {item.name}
@@ -143,9 +144,8 @@ export const Model= (props: {
                       Mô tả: {item.des}
                     </Text>
                   </View>
-                  )
-                
-                }
+                  {/* )
+                } */}
               </View>
               </Pressable>
               );

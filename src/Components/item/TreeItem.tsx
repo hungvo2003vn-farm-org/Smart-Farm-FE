@@ -28,7 +28,7 @@ const ImageContainer = styled.Image`
   resize-mode: contain;
   margin-left: 10px;
 `;
-import { TreeItemProps } from "./types";
+import { TreeItemProps, treeProps } from "./types";
 import BigText from "../texts/BigText";
 import { FontSize } from "@/Theme/Variables";
 import { Pressable } from "react-native";
@@ -38,11 +38,16 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/Navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { clickFarm } from "@/Store/reducers/farm";
-const TreeItem: FunctionComponent = ({id, name, model, timeOn}) => {
+
+const TreeItem = (
+  props: treeProps
+) => {
+  const { id, name, model } = props;
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   return (
-    <Pressable onPress={() => {dispatch(clickFarm(id));navigation.navigate(RootScreens.MODEL)}}>
+    //onPress={() => {dispatch(clickFarm(id));navigation.navigate(RootScreens.MODEL)}}
+    <Pressable onPress={() => {navigation.navigate(RootScreens.MODEL, {farmProps: id})}}>
       <ItemContainer>
         <ImageContainer source={plant1}></ImageContainer>
         <DetailContainer>
@@ -50,7 +55,7 @@ const TreeItem: FunctionComponent = ({id, name, model, timeOn}) => {
             {name}
           </BigText>
           <RegularText textStyles={{ fontWeight: "200" }}>
-            {"Mô hình : " + model.name}
+            {"Mô hình : " + model.name ? model.name : ""}
           </RegularText>
           {/* <RegularText textStyles={{ fontWeight: "200" }}>
             {"Thời điểm tưới tiếp theo : " + timeOn}

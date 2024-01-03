@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
 import styled from "styled-components/native";
 
 import { Container } from "../../Components/shared";
@@ -8,7 +7,7 @@ import { colors } from "../../Components/colors";
 import RegularText from "@/Components/texts/RegularText";
 import BigText from "@/Components/texts/BigText";
 import { Pressable, SafeAreaView } from "react-native";
-import logo from "../../../assets//bg/logocay.png";
+import logo from "../../../assets/bg/logocay.png"
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { EvilIcons } from "@expo/vector-icons";
 import { TextInput } from "react-native";
@@ -19,9 +18,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "@/Navigation";
 import { RootScreens } from "..";
-import { useSelector } from "react-redux";
-import { View } from "react-native";
-import { useGetFarmListQuery, useLazyGetFarmListQuery, useLazyGetFarmQuery } from "@/Services";
+import FarmList from "./FarmList";
+import { useLazyGetFarmListQuery } from "@/Services";
 const MainScreenContainer = styled.View`
   background-color: ${colors.white};
   flex: 1;
@@ -46,28 +44,18 @@ const InputContainer = styled.View`
   border-radius: 10px;
   border: 1px solid #435b71;
 `;
-const ItemContainer = styled.ScrollView`
-  height: 110%;
-  width: 100%;
-  margin-top: 2px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-`;
 const MainScreen= (
-  // props:{data: any}
+  props:{navigation:any, data: any, isSuccess: any, isFetching: any}
   ) => {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  // const data = useSelector((state) => state.farm.farmlist);
-  const result =
-  useGetFarmListQuery();
-  // const handleFetchOne = async () =>{
-  //   await fetchOne();
-  // }
-  // useEffect(() => {
-  //   handleFetchOne();
-  //   console.log("result",result);
-  // }, [fetchOne,result]);
+    const {navigation, data, isSuccess, isFetching} = props;
+
+    // useEffect(() => {
+    //   const unsubscribe = navigation.addListener('focus', () => {
+    //     // Your data fetching logic here
+    //   });
+  
+    //   return unsubscribe;
+    // }, [navigation]);
 
   return (
     <SafeAreaView
@@ -109,21 +97,7 @@ const MainScreen= (
               Thêm nông trại
             </RegularText>
         </Pressable>
-        {result.isSuccess?
-        <ItemContainer>
-            {result.currentData.map((item, index) => {
-            return (
-            <View key={index}>
-              {/* <TreeItem {...item.id} {...item.name} {...item.model} {...item.timeOn}></TreeItem> */}
-              <TreeItem id = {item.id} name = {item.name? item.name: ''} model= {item.model? item.model: ''} 
-              // timeOn={item.timeOn}
-              ></TreeItem>
-              </View>
-              )}
-            )}
-          </ItemContainer>
-          : <View> Đang cập nhật</View>
-        } 
+        <FarmList data={data} isSuccess={isSuccess} isFetching={isFetching}/>
       </MainScreenContainer>
     </SafeAreaView>
   );
