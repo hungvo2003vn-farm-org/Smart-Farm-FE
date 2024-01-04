@@ -11,15 +11,15 @@ export interface Schedule {
 const scheduleApi = API.injectEndpoints({
   endpoints: (build) => ({
     getScheduleList: build.query({
-      query: (id) => `scenarios`,
+      query: (id) => `schedule/user/${id}`,
     }),
-    createSchedule: build.mutation({
-      query: ({farmid, modelid, timeOn, duration, amount}) => ({
-        url: 'scenarios',
-        method: 'POST',
-        body: { farmid, modelid, timeOn, duration, amount},
+    createSchedule:  build.mutation({
+      query: (body) => ({
+          url: 'scenarios',
+          method: 'POST',
+          body,
       }),
-    }),
+  }),
     deleteSchedule: build.mutation({
       query: (id) => ({
         url: `scenarios/${id}`,

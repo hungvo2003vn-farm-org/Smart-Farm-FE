@@ -10,7 +10,7 @@ import RegularText from "@/Components/texts/RegularText";
 import { Pressable, TextInput } from "react-native";
 import MailIcon from "../../../assets/icon/MailIcon";
 import RegularButton from "@/Components/button/RegularButton";
-import { View } from "react-native";
+import { View, Text} from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { RootScreens } from "..";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -21,6 +21,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from "react-redux";
 import { useLoginUserMutation } from "@/Services/auth";
 import { addUser } from "@/Store/reducers/profile";
+import { setUser } from "@/Store/reducers/farm";
 const LoginScreenContainer = styled(Container)`
   width: 100%;
   height: 100%;
@@ -75,7 +76,9 @@ const LoginScreen= (props: {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const user = useSelector((state) => state.profile);
+    // const userFarm = useSelector((state) => state.farmlist);
     const dispatch = useDispatch();
+    const farmUser = useSelector((state) => state.farm.user);
     const handleLogin = async () => {
       try {
         console.log(username, password)
@@ -90,6 +93,9 @@ const LoginScreen= (props: {
             id: response.user.id, 
             username: response.user.username, 
             useremail: response.user.email}));
+          
+            dispatch(setUser(response.user.id));
+
           // Navigate to the home page
           props.navigation.reset({
             index: 0,

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, SectionList, View, Text, StyleSheet, Image, Pressable, TouchableOpacity, Dimensions, Modal} from "react-native";
 import { FontAwesome5, AntDesign, Entypo, MaterialCommunityIcons, MaterialIcons, Ionicons, Feather} from "@expo/vector-icons";
 import {FontSize, Colors} from "@/Theme"
@@ -8,19 +8,33 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/Navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFarm } from "@/Store/reducers/farm";
+import { useDeleteFarmMutation, useLazyGetFarmQuery } from "@/Services";
 
 const HeaderDetail = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const dispatch = useDispatch();
-  const farmdata = useSelector((state) => state.farm.selectedFarm);
+  const curFarm = useSelector((state) => state.farm.selectedFarm);
   const [isConfirmationVisible, setConfirmationVisible] = useState(false); //Confirm delete UI
+  const [deleteFarmbyId, result] = useDeleteFarmMutation();
+  // const [fetchOne, { data, isSuccess, isLoading, isFetching, error }] = useLazyGetFarmQuery();
+  // const handleFetch = async () => {
+  //   await fetchOne(curFarmId);
+  // }
+  // useEffect(() => {
+  //   handleFetch();
+  // }, [isSuccess]);
+  // if(isFetching){
+  //   return <View></View>
+  // }
   const handlePress = () => {
     setConfirmationVisible(true);
-    console.log(setConfirmationVisible)
   };
-  const handleConfirm = () => {
+  const handleConfirm =  () => {
     // Handle confirmation delete water schedule logic here
     setConfirmationVisible(false);
+    console.log("starting to delete water")
+    deleteFarmbyId(curFarm.id);
+    console.log("result",result, curFarm.id)
     dispatch(deleteFarm());
     navigation.navigate(RootScreens.HOME);
   };
@@ -43,16 +57,16 @@ const HeaderDetail = () => {
       </View>
       <View style={styles.intro}>
         <View style={{left: 25, marginBottom: 15, marginTop: 15,}}>
-          <Text style={styles.title}>{farmdata.name}</Text>
+          <Text style={styles.title}>{curFarm .name}</Text>
         </View>
         <View style={styles.farmInfo}>
           <View>
-            <Text style={styles.normalText}>Ngày trồng: {farmdata.date}</Text>
-            <Text style={styles.normalText}>Địa chỉ: {farmdata.location}</Text>
+            {/* <Text style={styles.normalText}>Ngày trồng: {curFarm .createdAt}</Text> */}
+            <Text style={styles.normalText}>Địa chỉ: {curFarm .address}</Text>
           </View>
           <View>
-            <Text style={styles.normalText}>Loại cây: {farmdata.plant}</Text>
-            <Text style={styles.normalText}>Diện tích: {farmdata.acraege} m2</Text>
+            <Text style={styles.normalText}>{curFarm.cultivar? `Loại cây: ${curFarm.cultivar.name}` : ''}</Text>
+            {/* <Text style={styles.normalText}>Diện tích: {curFarm .area} m2</Text> */}
           </View>
         </View>
       </View>

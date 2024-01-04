@@ -1,32 +1,24 @@
-import { useLazyGetFarmListQuery, useLazyGetFarmQuery } from "@/Services";
+import { useLazyGetFarmListQuery } from "@/Services";
 import MainScreen from "./MainScreen";
-import { useEffect, useState } from "react";
-
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "@/Navigation";
-import { RootScreens } from "..";
-import { useIsFocused } from "@react-navigation/native";
-export type MainScreenNavigatorProps = NativeStackScreenProps<
-  RootStackParamList,
-  RootScreens.MAINTREE
-  >;
-
-const MainScreenContainer = ({navigation}:MainScreenNavigatorProps) => {
-  const [fetchOne, { data, isSuccess, isLoading, isFetching, error }] = useLazyGetFarmListQuery();
-  const isFocused = useIsFocused();
-
-useEffect(() => {
-  navigation.addListener('focus', () => 
-  {
-    fetchOne()
-    console.log(data)
-    alert(`${isSuccess}`)
-  })
-  console.log(data)
-  console.log(isFocused)
-}, [navigation]);
-  return <MainScreen navigation={navigation}
-  data={data} isSuccess={isSuccess} isFetching={isFetching}
-   ></MainScreen>;
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { updateFarmList } from "@/Store/reducers/farm";
+import { View } from "native-base";
+const MainScreenContainer = () => {
+  // const dispatch = useDispatch();
+  // const [fetchOne, { data, isSuccess, isLoading, isFetching, error }] =
+  // useLazyGetFarmListQuery();
+  // useEffect(() => {
+  //   fetchOne();
+  //   if (isSuccess) {
+  //     dispatch(updateFarmList(data));
+  //   }
+  // }, [isSuccess]);
+  // if(isFetching){
+  //   return <View></View>
+  // }
+  return <MainScreen 
+  // data={data} isSuccess={isSuccess} isLoading={isLoading} isFetching={isFetching} error={error} 
+  ></MainScreen>;
 };
 export default MainScreenContainer;

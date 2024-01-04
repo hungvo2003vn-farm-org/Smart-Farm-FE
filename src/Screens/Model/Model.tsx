@@ -1,5 +1,5 @@
 import { i18n, LocalizationKey } from "@/Localization";
-import React , {useState} from "react";
+import React , {useEffect, useState} from "react";
 import { FontAwesome5, AntDesign, Entypo, MaterialCommunityIcons, MaterialIcons, Ionicons} from "@expo/vector-icons";
 import { View, Text, StyleSheet, Image,  Dimensions, ScrollView, Modal, Pressable } from "react-native";
 import { StatusBar } from "expo-status-bar";
@@ -9,7 +9,8 @@ import {ModelScreenNavigatorProps} from "./ModelContainer";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HeaderDetail from "@/Components/header";
 import { useDispatch, useSelector } from "react-redux";
-import { updateModel } from "@/Store/reducers/farm";
+import {  updateModel, setCurFarmModel } from "@/Store/reducers/farm";
+import { useLazyGetModelQuery, useUpdateFarmMutation } from "@/Services";
 
 const screenWidth = Dimensions.get('window').width;
 const screenScale = screenWidth / 375;
@@ -20,50 +21,77 @@ export interface ModelProps {
 
 export const Model= (props: {
     onNavigate: (string: RootScreens) => void;
-    farmId: any;
   }) => {
-    // const dispatch = useDispatch();
     // const [modelstatus, setModelStatus] = useState(1);
+    const [upModelReq,result] = useUpdateFarmMutation();
+
     const [isConfirmationVisible, setConfirmationVisible] = useState(false); //Confirm delete UI
-    // const activeModelId = useSelector((state) => state.farm.selectedFarm.model.id);
-    const [curModelId, setCurModelId] = useState(0); //
-    
-    //Handle delete water schdule
-    const handlePress = ()  => {
-      setConfirmationVisible(true);
-      // setCurModelId(id);
-    };
+    const curFarm = useSelector((state) => state.farm.selectedFarm);
+    const [curModel, setCurModel] = useState({});
+    const activeModelId = useSelector((state ) => state.farm.selectedFarm.model?.id);
+    // const curActiveModelId = useSelector((state) => state.farm.curModelId);
+    const dispatch = useDispatch();
+    const [fetchOne, { data, isSuccess, isLoading, isFetching, error }] = useLazyGetModelQuery();
+    const handleFetch = async () => {
+      await fetchOne();
+    }
+    useEffect(() => {
+      handleFetch();
+    }, [isSuccess]);
   
-    const handleConfirm= () => {
+    // console.log(data);
+  
+    if(isFetching){
+      return <View></View>
+    }
+  
+    //Handle delete water schdule
+    const handlePress = (item: any)  => {
+      setConfirmationVisible(true);
+      setCurModel(item);
+    };
+    const handleUpdateModel = async () => {
+      const id= curFarm.id;
+      const model= curModel.id;
+
+      await upModelReq({id, model}).unwrap();
+      
+      // if(result.isSuccess){
+      //   dispatch(updateModel(curModel))
+      // }
+    }
+    const handleConfirm= async () => {
       // Handle confirmation delete water schedule logic here
       setConfirmationVisible(false);
-      // dispatch(updateModel({id: data[curModelId-1].id, name: data[curModelId-1].name}));
+      handleUpdateModel();
+      dispatch(setCurFarmModel(curModel))
+      dispatch(updateModel(curModel));
     };
   
     const handleCancel = () => {
       // Handle cancellation delete water schedule logic here
       setConfirmationVisible(false);
     };
-    const data = [
-      {
-        id: 1,
-        name: 'Năng suất',
-        source: 'Nhà cung cấp',
-        des: 'Sử dụng lượng nước phù hợp để tạo ra năng suất tối ưu',
-      },
-      {
-        id: 2,
-        name: 'Cân bằng',
-        source: 'Nhà cung cấp',
-        des: ' Sử dụng lượng nước vừa đủ để tạo ra năng suất vừa đủ',
-      },
-      {
-        id: 3,
-        name: 'Tiết kiệm',
-        source: 'Nhà cung cấp',
-        des: 'Sử dụng lượng nước tiết kiệm, vẫn đảm bảo cây phát triển',
-      }
-    ];
+    // const data = [
+    //   {
+    //     id: 1,
+    //     name: 'Năng suất',
+    //     source: 'Nhà cung cấp',
+    //     des: 'Sử dụng lượng nước phù hợp để tạo ra năng suất tối ưu',
+    //   },
+    //   {
+    //     id: 2,
+    //     name: 'Cân bằng',
+    //     source: 'Nhà cung cấp',
+    //     des: ' Sử dụng lượng nước vừa đủ để tạo ra năng suất vừa đủ',
+    //   },
+    //   {
+    //     id: 3,
+    //     name: 'Tiết kiệm',
+    //     source: 'Nhà cung cấp',
+    //     des: 'Sử dụng lượng nước tiết kiệm, vẫn đảm bảo cây phát triển',
+    //   }
+    // ];
     
   return(
     <SafeAreaView style={{backgroundColor: Colors.AVT_BACKGROUND,}}>
@@ -114,42 +142,43 @@ export const Model= (props: {
         </View>
         <View style={styles.info}>
           <ScrollView style={styles.scrollView}>
-          {data.map((item, index) => {
-            return (
-              <Pressable  key={index}  onPress={()=>{handlePress();}}>
+          {data && isSuccess ? (data.map((item, index) => (
+              <Pressable  key={index}  onPress={()=>{handlePress(item);}}>
               <View style={{ flexDirection: 'row' }}>
-                {/* {
-                item.id == activeModelId? 
-                  ( */}
+                {
+                item.id === activeModelId?
+                  (
                     <View style={styles.dataItemActive}>
                       <Text >
                         Mô hình {item.name}
                       </Text>
                       <Text>
-                        Nguồn: {item.source}
+                        Nguồn: {item.description}
                       </Text>
                       <Text>
-                        Mô tả: {item.des}
+                        Mô tả: {item.provider}
                       </Text>
                     </View>
-                  {/* ):( */}
+                  ):(
                     <View style={styles.dataItemInactive}>
-                    <Text >
-                      Mô hình {item.name}
-                    </Text>
-                    <Text>
-                      Nguồn: {item.source}
-                    </Text>
-                    <Text>
-                      Mô tả: {item.des}
-                    </Text>
+                      <Text >
+                        Mô hình {item.name}
+                      </Text>
+                      <Text>
+                        Nguồn: {item.description}
+                      </Text>
+                      <Text>
+                        Mô tả: {item.provider}
+                      </Text>
                   </View>
-                  {/* )
-                } */}
+                  )
+                
+                }
               </View>
               </Pressable>
-              );
-              })}
+              ))) : (
+                <View></View>
+              )}
           <Modal
             transparent={true}
             visible={isConfirmationVisible}

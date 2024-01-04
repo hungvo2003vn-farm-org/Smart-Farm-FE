@@ -38,16 +38,12 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/Navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { clickFarm } from "@/Store/reducers/farm";
-
-const TreeItem = (
-  props: treeProps
-) => {
-  const { id, name, model } = props;
+const TreeItem = (  props: treeProps) => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const { id, name, model } = props;
   return (
-    //onPress={() => {dispatch(clickFarm(id));navigation.navigate(RootScreens.MODEL)}}
-    <Pressable onPress={() => {navigation.navigate(RootScreens.MODEL, {farmProps: id})}}>
+    <Pressable onPress={() => {dispatch(clickFarm(id));navigation.navigate(RootScreens.MODEL)}}>
       <ItemContainer>
         <ImageContainer source={plant1}></ImageContainer>
         <DetailContainer>
@@ -55,7 +51,7 @@ const TreeItem = (
             {name}
           </BigText>
           <RegularText textStyles={{ fontWeight: "200" }}>
-            {"Mô hình : " + model.name ? model.name : ""}
+            {"Mô hình : " + (model.name ? model.name : "Chưa có mô hình")}
           </RegularText>
           {/* <RegularText textStyles={{ fontWeight: "200" }}>
             {"Thời điểm tưới tiếp theo : " + timeOn}

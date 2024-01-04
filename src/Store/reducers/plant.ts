@@ -1,14 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 } from "uuid";
 const profileSlice = createSlice({
-  name: "profile",
+  name: "plant",
   initialState: { 
-    token: "",
-        id: "",
-        username: "",
-        email: "",
-        firstName: "",
-        lastName: "",
+    plantlist: [],
   },
   reducers: {
     addUser: (state, action) => {

@@ -1,44 +1,75 @@
-import { FarmListJson } from "@/Config";
-import { Farm } from "@/Services";
+
 import { createSlice } from "@reduxjs/toolkit";
-import { v4 } from "uuid";
 
 const farmSlice = createSlice({
   name: "farmlist",
   initialState: { 
-    farmlist: new Array<Farm>,
+    farmlist: [{}],
+    user:"",
     inputFarmName: "",
     inputPlant: "",
     inputLocation: "",
     inputAcraege: "",
-    selectedFarm: {
-      
-    },
-    curSchedule:{
-      id: "",
-      waterHour: '',
-      waterTime: '',
-      water: '',
-    },
+    selectedFarm: {},
+    curFarmSchedule: [{}],
+    curSchedule:"",
+    curModel: {},
+    curActiveModeId: "",
   },
   reducers: {
-    addFarm: (state) => {
-      if (!state.inputLocation) state.inputLocation="Tp.Hồ Chí Minh";
-      if (!state.inputPlant) state.inputPlant="Cây cam";
-        const newFarm = {
-          id: v4(),
-          name: state.inputFarmName,
-          date: "27/12/2023",
-          model: {
-            id: 0,
-            name: ""
-          },
-          timeOn: "",
-          plant: state.inputPlant,
-          acraege: state.inputAcraege,
-          location: state.inputLocation,
-          sche: []
-        };
+    getCurFarmSchedule: (state, action) => {
+      action.payload.map((task)=> {
+        
+        if(task.farmId) {
+          if(task.farmid === state.selectedFarm.id && state.curFarmSchedule.findIndex((scenario)=> scenario.id === task.id) === -1){
+            state.curFarmSchedule.push(task);  
+          }
+        }
+      })
+    },
+    deleteCurSchedule: (state, action) => {
+      const idxSche = state.curFarmSchedule.findIndex(
+        (task) => task.id === state.curSchedule
+      );
+      state.curFarmSchedule.splice(idxSche, 1);
+    },
+    addCurFarmSchedule: (state, action) => {
+      const newSchedule = action.payload;
+      state.curFarmSchedule.push(newSchedule);
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
+    // getSelectedModelId: (state, action) => {
+    // const idxTask = state.farmlist.findIndex(
+    //   (task) => task.id == state.selectedFarm.id);
+    //   if (state.farmlist[idxTask].model)
+    //     {state.curActiveModeId = state.farmlist[idxTask].model.id;}
+    // },
+    // setModel: (state, action) => {
+    //   const idxTask = state.farmlist.findIndex(
+    //     (task) => task.id == state.selectedFarm.id);
+    //   state.farmlist[idxTask].model = action.payload;
+    //   state.curActiveModeId  = action.payload.id;
+    // },
+    updateFarmList: (state, action) => {
+      // console.log("updateFarmList", action.payload);
+      // state.farmlist = [];
+      // action.payload.map((task)=> {
+      //   if(task.user) {
+      //     console.log("task",task );
+      //     if(task.user.id === state.user && state.farmlist.findIndex((farm)=> farm.id === task.id) === -1){
+      //       state.farmlist.push(task);  
+      //     }
+      //   }
+      // });
+      state.farmlist =  action.payload;
+    },
+    deleteFarmList: (state, action) => {
+      state.farmlist = [];
+    },
+    addFarm: (state, action) => {
+        const newFarm = action.payload
         state.farmlist.push(newFarm);
         state.inputFarmName= "";
         state.inputPlant= "";
@@ -49,7 +80,8 @@ const farmSlice = createSlice({
       const idxTask = state.farmlist.findIndex(
         (task) => task.id == action.payload
       );
-      state.selectedFarm =  state.farmlist[idxTask];
+      state.selectedFarm = state.farmlist[idxTask];
+      console.log("state.selectedFarm",state.selectedFarm);
     },
     updateInputFarmName: (state, action) => {
       state.inputFarmName = action.payload;
@@ -63,42 +95,51 @@ const farmSlice = createSlice({
     updateInputAcraege: (state, action) => {
       state.inputAcraege = action.payload;
     },
+    setCurFarmModel: (state, action) => {
+      state.curModel = action.payload;
+    },
     updateModel: (state, action) => {
       const idxTask = state.farmlist.findIndex(
         (task) => task.id == state.selectedFarm.id
       );
-      state.farmlist[idxTask].model = action.payload;
+      state.farmlist[idxTask].model= action.payload;
       state.selectedFarm.model = action.payload;
     },
-    addSchedule: (state, action) =>{
-      const idxTask = state.farmlist.findIndex(
-        (task) => task.id == state.selectedFarm.id
-      );
-      state.farmlist[idxTask].sche.push(action.payload);
-      state.selectedFarm.sche.push( action.payload);
-    },
+    // addSchedule: (state, action) =>{
+    //   const idxTask = state.farmlist.findIndex(
+    //     (task) => task.id == state.selectedFarm
+    //   );
+    //   state.farmlist[idxTask].sche.push(action.payload);
+    //   state.selectedFarm.sche.push( action.payload);
+    // },
     setCurSche:(state, action)=>{
       state.curSchedule = action.payload;
     },
     deleteSchedule: (state)=>{
-      const idxTask = state.farmlist.findIndex(
-        (task) => task.id == state.selectedFarm.id
+      const idxSche = state.farmSchedule.findIndex(
+        (task) => task.id === state.curSchedule
       );
-      const idxSche = state.selectedFarm.sche.findIndex(
-        (task) => task.id === state.curSchedule.id
-      );
-      state.farmlist[idxTask].sche.splice(idxSche, 1);
-      state.selectedFarm.sche.splice(idxSche, 1);
+      state.farmSchedule.splice(idxSche, 1);
     },
-    deleteFarm: (state) =>{
+    getSchedule: (state, action)=>{
+      state.farmSchedule = action.payload.filter((task)=> task.farmid === state.selectedFarm);
+    },
+
+    deleteFarm: (state, action) => {
       const idxTask = state.farmlist.findIndex(
         (task) => task.id == state.selectedFarm.id
       );
       state.farmlist.splice(idxTask, 1);
+      state.selectedFarm = {};
+      state.inputFarmName= "";
+      state.inputPlant= "";
+      state.inputLocation= "";
+      state.inputAcraege= "";
     }
   },
 });
 
-export const { addFarm, clickFarm, updateInputAcraege, updateInputFarmName, updateInputLocation, updateInputPlant, updateModel, addSchedule, setCurSche, deleteSchedule, deleteFarm } = farmSlice.actions;
-
+// export const { addFarm, clickFarm, updateInputAcraege, updateInputFarmName, updateInputLocation, updateInputPlant, updateModel, addSchedule, setCurSche, deleteSchedule, deleteFarm } = farmSlice.actions;
+export const { getCurFarmSchedule, deleteCurSchedule, addCurFarmSchedule, deleteFarmList, setCurFarmModel,
+  setUser, updateFarmList, addFarm, clickFarm, updateInputAcraege, updateInputFarmName, updateInputLocation, updateInputPlant, updateModel, setCurSche, getSchedule, deleteSchedule, deleteFarm } = farmSlice.actions;
 export const farmReducers = farmSlice.reducer;

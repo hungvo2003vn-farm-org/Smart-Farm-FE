@@ -1,7 +1,7 @@
 import { API } from "../base";
 
 export interface Model {
-  id: number;
+  id: string;
   name: string;
   source: string;
   desc: string;
@@ -11,7 +11,7 @@ export interface Model {
 const modelApi = API.injectEndpoints({
   endpoints: (build) => ({
     getModel: build.query({
-      query: () => `model`,
+      query: () => `models`,
     }),
   }),
   overrideExisting: true,

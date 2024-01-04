@@ -3,7 +3,6 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { MainNavigator } from "@/Navigation/Main";
 import { NativeBaseProvider } from "native-base";
-import { RootScreens } from "..";
 // export interface IHomeProps {
 //   data: User | undefined;
 //   isLoading: boolean;
@@ -32,9 +31,7 @@ import { RootScreens } from "..";
 //     </View>
 //   );
 // };
-export const Home = (props: {
-  onNavigate: (string: RootScreens) => void;
-  }) => {
+export const Home = () => {
   return (
     <NativeBaseProvider>
       <MainNavigator></MainNavigator>

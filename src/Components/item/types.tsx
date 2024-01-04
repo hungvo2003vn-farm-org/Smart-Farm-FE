@@ -8,7 +8,7 @@ export interface TreeItemProps {
   timeOn: String;
 }
 export interface treeProps {
-  id: number,
+  id: string,
   name: string,
   model: any,
 }

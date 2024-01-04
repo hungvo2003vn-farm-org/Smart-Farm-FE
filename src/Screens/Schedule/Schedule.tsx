@@ -12,8 +12,9 @@ import { FontSize, Colors } from "@/Theme"
 import { ScheduleScreenNavigatorProps } from "./ScheduleContainer";
 import HeaderDetail from "@/Components/header";
 import { useDispatch, useSelector } from "react-redux";
-import { addSchedule, deleteSchedule, setCurSche } from "@/Store/reducers/farm";
+import { addCurFarmSchedule, deleteCurSchedule,  setCurSche } from "@/Store/reducers/farm";
 import { v4 } from "uuid";
+import { useCreateScheduleMutation, useDeleteScheduleMutation } from "@/Services";
 
 const screenWidth = Dimensions.get('window').width;
 const screenScale = screenWidth / 375;
@@ -55,7 +56,6 @@ export const Schedule = (props: {
 }) => {
   const scenario = [
     {
-      farmId: '1',
       sche: [
         {
           waterHour: '07:00',
@@ -68,24 +68,11 @@ export const Schedule = (props: {
           water: '700',
         }
       ]
-    },
-    {
-      farmId: '2',
-      sche: [
-        {
-          waterHour: '07:00',
-          waterTime: '10:00',
-          water: '500',
-        },
-        {
-          waterHour: '08:00',
-          waterTime: '12:00',
-          water: '700',
-        }
-      ]
-    },
+    }
   ]
-  var data = useSelector((state) => state.farm.selectedFarm.sche);
+  var data = useSelector((state) => state.farm.curFarmSchedule);
+  const [createSchedule, createSchceduleRes] = useCreateScheduleMutation();
+  const [deleteSchedule, deleteSchceduleRes] = useDeleteScheduleMutation();
   const [isConfirmationVisible, setConfirmationVisible] = useState(false); //Confirm delete UI
   const [isCreateScheduleVisible, setCreateScheduleVisible] = useState(false); //Confirm create schedule UI
   // const [inputDate, setInputDate] = useState(''); // Select date in create schedule
@@ -93,22 +80,41 @@ export const Schedule = (props: {
   const [duration, setDuration] = useState(''); 
   const [amount, setAmount] = useState(''); 
   // const [dataState, setDataState] = useState(data);
-  const curSche = useSelector((state) => state.farm.curSche);
+  const curSche = useSelector((state) => state.farm.curSchedule);
+  const curFarm = useSelector((state) => state.farm.selectedFarm);
+  const curModel = useSelector((state) => state.farm.curModel);
   //Handle create schedule
   const handleCreateSchedulePress = () => {
     setCreateScheduleVisible(true);
+
   };
   const dispatch = useDispatch()
 
-  const handleCreateScheduleConfirm = () => {
+  const handleCreateScheduleConfirm = async () => {
     // Handle confirmation delete water schedule logic here
-    setCreateScheduleVisible(false);
-    dispatch(addSchedule({
-    id: v4(),
-    waterHour: timeOn,
-    waterTime: duration,
-    water: amount,}))
+    try{
+    const params = {
+      name: "Tưới",
+      time: timeOn,
+      duration: +duration,
+      amount: +amount,
+      modelId: curModel.id,
+      farmId: curFarm.id,
   };
+    setCreateScheduleVisible(false);
+
+    const response = await createSchedule(params).unwrap();
+    if(response)
+    {  
+      console.log(response)
+      dispatch(addCurFarmSchedule(response))
+    }
+
+}
+  catch (error) {
+    console.error('Error creating scheule:', error);
+}
+};
 
   const handleCreateScheduleCancel = () => {
     // Handle cancellation delete water schedule logic here
@@ -123,7 +129,8 @@ export const Schedule = (props: {
   const handleConfirm = () => {
     // Handle confirmation delete water schedule logic here
     setConfirmationVisible(false);
-    dispatch(deleteSchedule())
+    deleteSchedule(curSche.id);
+    dispatch(deleteCurSchedule())
   };
 
   const handleCancel = () => {
@@ -203,8 +210,9 @@ export const Schedule = (props: {
                 <AntDesign name="down" size={24} color="black" />
               </TouchableOpacity> */}
             </View>
+            {curFarm.model? (
             <View style={{ backgroundColor: '#E9F3ED' }}>
-              <Text style={{ margin: 10, fontSize: 17 }}>Mô hình: Năng suất</Text>
+              <Text style={{ margin: 10, fontSize: 17 }}>Mô hình: {curModel.name}</Text>
               <View style={styles.dataItemScenario}>
                 <View style={styles.container}>
                   <View style={styles.leftColumn}>
@@ -226,6 +234,7 @@ export const Schedule = (props: {
                 <Text>
                   Lượng nước
                 </Text> */}
+                
               </View>
               {scenario.map((item, index) => {
                 return (
@@ -264,8 +273,12 @@ export const Schedule = (props: {
                 </Text>
               </View> */}
             </View>
-          </View>
-
+          
+           ): (<View style={styles.modelItem}> 
+            <Text style={styles.desView}>Chưa chọn mô hình</Text>
+          </View> )
+            }
+            </View>
 
           <TouchableOpacity onPress={handleCreateSchedulePress}>
             <View style={styles.addScheduleButton}>
@@ -276,7 +289,7 @@ export const Schedule = (props: {
           <View style={styles.modelItem}>
           <Text style={styles.titleView} >Lịch trình của tôi</Text>
           </View>
-          {data.map((item, index) => {
+          {data?.map((item, index) => {
             return (
               <View key={index} style={styles.modelItem}>
                 <View style={{
@@ -294,13 +307,13 @@ export const Schedule = (props: {
                         <View key={index} style={{ flexDirection: 'row' }}>
                           <View style={styles.dataItem}>
                             <Text>
-                              Giờ tưới: {item.waterHour}
+                              Giờ tưới: {item.time}
                             </Text>
                             <Text>
-                              Thời gian: {item.waterTime}
+                              Thời gian: {item.duration}
                             </Text>
                             <Text>
-                              Lượng nước: {item.water}
+                              Lượng nước: {item.amount}
                             </Text>
                           </View>
                           <TouchableOpacity style={styles.deleteBtn} onPress={() => {handlePress(item)}}>
@@ -363,10 +376,10 @@ export const Schedule = (props: {
                 <View style={styles.borderBoxField}>
                   <TextInput
                     style={styles.scheduleTextInput}
-                    placeholder="00:00"
+                    placeholder="00"
                     onChangeText={handleDurationChange}
                     value={duration}
-                    keyboardType="numbers-and-punctuation"
+                    keyboardType="numeric"
                   />
                 </View>
                 <Text style={styles.scheduleText}>Lượng nước (lít):</Text>

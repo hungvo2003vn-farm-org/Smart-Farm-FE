@@ -9,7 +9,7 @@ export interface Plant {
 const plantApi = API.injectEndpoints({
   endpoints: (build) => ({
     getPlant: build.query({
-      query: () => `plant`,
+      query: () => `cultivars`,
     }),
   }),
   overrideExisting: true,

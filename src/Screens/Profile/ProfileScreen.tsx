@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import styled from "styled-components/native";
 
@@ -18,10 +18,10 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@/Navigation";
 import { RootScreens } from "..";
-import { useSelector } from "react-redux";
-
-import { useGetUserQuery } from "@/Services";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch, useSelector } from "react-redux";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useLazyGetUserQuery } from "@/Services";
+import { deleteProfile, updateName } from "@/Store/reducers/profile";
 const ProfileScreenContainer = styled(Container)`
   width: 100%;
   flex: 1;
@@ -61,46 +61,30 @@ const Circle = styled.View`
   justify-content: center;
   align-items: center;
 `;
-const ProfileScreen = () => {
+const ProfileScreen: FunctionComponent = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const userId = useSelector((state) => state.profile.id);
-    const result= useGetUserQuery(userId);
-    console.log('userId',userId);
-    // const firstName = result.data.firstName? result.data.firstName: '';
-    // const lastName = result.data.lastName? result.data.lastName: '';
-    console.log('lastName',result);
-    // useEffect(() => {
-    //   fetchOne(props.data);
-    //   console.log("data", props.data);
-    //   console.log(result);
-    //   // fetchOne(user.id);
-    //   // console.log('user', user);
-    //   // console.log(result);
-      
-    //   // dispatch(editprofile({ name: data.firstName + ' ' +data.lastName, email: data.email}));
-    // }, [fetchOne]);
-    // const [result] = useLazyGetUserQuery();
-    // const [user, setUser] = useState({});
-    // const [dataState, setDataState] = useState(props.data);
 
-    // const handleFetchOne = async () =>{
-    //   await AsyncStorage.getItem("user").then((value) => {setUser(JSON.parse(value)) });
-    //   console.log(user.id);
-    //   await fetchOne(user.id);
-    // }
-    // useEffect(() => {
-    //   console.log('user',user);
-    //   handleFetchOne();
-    //   console.log(result);
-      
-    //   // dispatch(editprofile({ name: data.firstName + ' ' +data.lastName, email: data.email}));
-    // }, [result]);
-    // console.log(props.data)
+  const profile = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
+  const [fetchOne, { data, isSuccess, isLoading, isFetching, error }] = useLazyGetUserQuery();
+  const handleFetch = async () => {
+    await fetchOne(profile.id);
+  }
+  useEffect(() => {
+    handleFetch();
+    if (isSuccess) {
+      dispatch(updateName({ firstName: data.firstName, lastName: data.lastName }));
+    }
+  }, [isSuccess]);
+
+  if(isFetching){
+    return <View></View>
+  }
   const handleLogout = async () => {
     // Remove the JWT from AsyncStorage
     await AsyncStorage.removeItem('token');
-    // await AsyncStorage.removeItem('user');
+    dispatch(deleteProfile());
     // Navigate to the login page
     navigation.reset({
       index: 0,
@@ -139,7 +123,7 @@ const ProfileScreen = () => {
               fontSize: 20,
             }}
           >
-            {result.isSuccess? (result.data.firstName? result.data.firstName: '' + ' ' + result.data.lastName? result.data.lastName: ''): ''}
+            {(profile.firstName? profile.firstName : "") + " " +(profile.lastName? profile.lastName : "")}
           </RegularText>
           </View>
           <FontAwesome
