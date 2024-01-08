@@ -53,17 +53,17 @@ const farmSlice = createSlice({
     //   state.curActiveModeId  = action.payload.id;
     // },
     updateFarmList: (state, action) => {
-      // console.log("updateFarmList", action.payload);
-      // state.farmlist = [];
-      // action.payload.map((task)=> {
-      //   if(task.user) {
-      //     console.log("task",task );
-      //     if(task.user.id === state.user && state.farmlist.findIndex((farm)=> farm.id === task.id) === -1){
-      //       state.farmlist.push(task);  
-      //     }
-      //   }
-      // });
-      state.farmlist =  action.payload;
+      console.log("updateFarmList", action.payload);
+      state.farmlist = [];
+      action.payload.map((task)=> {
+        if(task.user) {
+          console.log("task",task );
+          if(task.user.id === state.user && state.farmlist.findIndex((farm)=> farm.id === task.id) === -1){
+            state.farmlist.push(task);  
+          }
+        }
+      });
+      // state.farmlist =  action.payload;
     },
     deleteFarmList: (state, action) => {
       state.farmlist = [];

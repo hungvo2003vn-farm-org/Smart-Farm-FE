@@ -59,11 +59,6 @@ const NotfifyScreen: FunctionComponent = () => {
           <View style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
             <NotifyItem
               title={"Vườn Xoài"}
-              detail={"Đã tưới xong"}
-              time={"Lúc 8:10 Sáng"}
-            ></NotifyItem>
-            <NotifyItem
-              title={"Vườn Xoài"}
               detail={"Chuẩn bị tưới trong 5 phút nữa"}
               time={"Lúc 7:55 Sáng"}
             ></NotifyItem>
@@ -72,10 +67,10 @@ const NotfifyScreen: FunctionComponent = () => {
             Hôm qua
           </RegularText>
           <View style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
-          <NotifyItem
+            <NotifyItem
               title={"Vườn Xoài"}
-              detail={"Đã tưới xong"}
-              time={"Lúc 8:10 Sáng"}
+              detail={"Chuẩn bị tưới trong 5 phút nữa"}
+              time={"Lúc 15:55 Sáng"}
             ></NotifyItem>
             <NotifyItem
               title={"Vườn Xoài"}

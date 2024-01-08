@@ -105,12 +105,10 @@ const AddFarmScreen: FunctionComponent = () => {
                 name: inputFarmName,
                 address: inputLocation,
                 description: "Đang cập nhật",
-                // cultivar: data[indexCulture],
                 cultivarId: cultivarId,
                 image: "",
-                // userId: `${userId}`,
                 userId: userId,
-                modelId: "",
+                modelId: "models_41986fa4-312a-4487-9161-22245ae577b1",
             };
 
             const response = await farmCreating(params).unwrap();
