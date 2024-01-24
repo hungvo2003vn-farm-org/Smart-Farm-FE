@@ -1,6 +1,8 @@
-account: sample.user
-pass: bkhpcc
-
-App name:
+# App name
 - Watamatic
 - Farmatic
+## Login Info
+```
+Username: sample.user
+Password: bkhpcc
+```
