@@ -1,6 +1,6 @@
 # App name
 - Watamatic
-- Farmatic
+- Farmatic 
 ## Login Info
 ```
 Username: sample.user
